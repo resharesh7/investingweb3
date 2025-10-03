@@ -1,987 +1,658 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Meta & SEO -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Wealth Options University | Membership, eCourses, Coaching</title>
-  <meta name="description" content="Wealth Options University by Mrs. Tiphany Richardson—monthly membership, eCourses, live coaching, and downloadable lessons. Bright prosperity theme, easy navigation." />
-  <link rel="canonical" href="https://www.wealthoptionsuniversity.com/" />
-  <meta property="og:title" content="Wealth Options University" />
-  <meta property="og:description" content="Membership, eCourses, live coaching, and downloadable lessons." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://www.wealthoptionsuniversity.com/og-image.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <script defer src="https://js.stripe.com/v3/"></script>
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Organization",
-    "name":"Wealth Options University",
-    "url":"https://www.wealthoptionsuniversity.com",
-    "description":"Membership, eCourses, and coaching by Mrs. Tiphany Richardson",
-    "founder": {"@type": "Person", "name": "Mrs. Tiphany Richardson"}
-  }
-  </script>
-
-  <!-- Styles (bright prosperity theme: light backgrounds, greens, golds) -->
+  <title>Creative Christian Learning Center</title>
+  <meta name="description" content="Creative Christian Learning Center — playful, professional learning for K–5 with scholarships and a 6–8 self-study program." />
   <style>
-    :root{
-      /* Backgrounds */
-      --bg:#f9fafc;
-      --card:#ffffff;
-      --glass:rgba(255,255,255,0.75);
-
-      /* Text */
-      --text:#1a1a1a;
-      --muted:#555;
-
-      /* Brand */
-      --primary:#28c76f; /* money green */
-      --accent:#ffd166;  /* gold */
-      --bless:#7c4dff;   /* blessing glow (used lightly) */
-      --danger:#ff3b3b;
-
-      /* Effects */
-      --shadow:0 8px 28px rgba(0,0,0,0.10);
-      --maxw:1200px;
-
-      /* Soft gradients */
-      --gradient-sunrise: linear-gradient(135deg, #fffbe6 0%, #f0fff7 50%, #f9f9ff 100%);
-      --gradient-gold: linear-gradient(135deg, #fffbe6 0%, #fff5d6 100%);
-      --gradient-mint: linear-gradient(135deg, #eafff3 0%, #f2fff9 100%);
+    /* Color system inspired by crayons */
+    :root {
+      --bg: #ffffff;
+      --fg: #1f2a44;
+      --muted: #5e6a85;
+      --card: #fffdfa;
+      --border: #e5e7eb;
+      --primary: #2563eb;  /* blue */
+      --crayon-red: #ff6b6b;
+      --crayon-yellow: #ffd166;
+      --crayon-green: #06d6a0;
+      --crayon-blue: #118ab2;
+      --crayon-purple: #8338ec;
+      --shadow: rgba(31, 42, 68, 0.14);
+    }
+    .theme-minimal {
+      --bg: #ffffff;
+      --fg: #0f172a;
+      --muted: #64748b;
+      --card: #f8fafc;
+      --border: #e5e7eb;
+      --primary: #111827;
+      --crayon-red: #111827;
+      --crayon-yellow: #111827;
+      --crayon-green: #111827;
+      --crayon-blue: #111827;
+      --crayon-purple: #111827;
+      --shadow: rgba(0,0,0,0.08);
     }
 
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif}
-    a{color:var(--text);text-decoration:none}
-    img{max-width:100%;display:block}
+    /* Base */
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--fg);
+      background:
+        radial-gradient(700px 400px at 10% -10%, rgba(131,56,236,0.10), transparent 55%),
+        radial-gradient(700px 400px at 90% -15%, rgba(17,138,178,0.10), transparent 55%),
+        var(--bg);
+      line-height: 1.6;
+    }
+    a { color: var(--primary); text-decoration: none; }
+    img { max-width: 100%; height: auto; }
+    .container { width: min(1100px, 92vw); margin: 0 auto; }
 
-    .container{max-width:var(--maxw);margin:0 auto}
-    .site-header{position:sticky;top:0;z-index:100;background:var(--glass);backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:space-between;padding:12px 18px}
-    .logo{font-weight:700}
-    .tagline{color:#2a7749;margin-left:8px;font-size:.9rem}
-    .nav a{margin:0 8px}
-    .btn-primary{background:var(--primary);color:#053515;padding:10px 16px;border-radius:12px;font-weight:700;box-shadow:var(--shadow);border:none;cursor:pointer}
-    .btn-ghost{border:1px solid rgba(0,0,0,0.12);padding:10px 16px;border-radius:12px;background:#fff;color:var(--text);cursor:pointer}
-    .small{font-size:.85rem;padding:6px 10px}
-    .pill{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid rgba(0,0,0,0.1);color:#2a7749;background:#f0fff7;font-size:.8rem}
-
-    .nav-toggle{display:none;background:transparent;color:var(--text);border:none;font-size:1.2rem}
-    @media (max-width:900px){
-      .nav{display:none;position:absolute;top:58px;right:12px;background:var(--card);padding:12px;border-radius:12px;box-shadow:var(--shadow)}
-      .nav a{display:block;margin:10px 0}
-      .nav-toggle{display:block}
+    /* Crayon header stripe */
+    .crayon-stripe {
+      height: 6px;
+      background:
+        linear-gradient(90deg,
+          var(--crayon-red) 0 20%,
+          var(--crayon-yellow) 20% 40%,
+          var(--crayon-green) 40% 60%,
+          var(--crayon-blue) 60% 80%,
+          var(--crayon-purple) 80% 100%);
     }
 
-    .section{display:none}
-    .section.active{display:block}
+    /* Navigation */
+    .nav {
+      position: sticky; top: 0; z-index: 1000;
+      backdrop-filter: saturate(180%) blur(10px);
+      background: color-mix(in oklab, var(--bg) 85%, transparent);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.6rem 0;
+    }
+    .brand { display: flex; align-items: center; gap: 0.8rem; font-weight: 800; }
+    .brand img { width: 40px; height: 40px; border-radius: 8px; box-shadow: 0 8px 20px var(--shadow); }
+    .links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .links a {
+      padding: 0.45rem 0.7rem; border-radius: 8px; font-weight: 700; color: var(--fg);
+      transition: transform 160ms ease, background 160ms ease;
+    }
+    .links a:hover { background: var(--card); transform: translateY(-1px); }
 
-    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;padding:60px 18px;background:var(--gradient-sunrise)}
-    .hero-art{position:relative;min-height:240px}
-    .coin-burst::before{content:"";position:absolute;inset:0;background:
-      radial-gradient(circle at 25% 30%, rgba(40,199,111,.18), transparent 40%),
-      radial-gradient(circle at 65% 60%, rgba(255,209,102,.18), transparent 40%)}
-    .glow-orb{position:absolute;right:20%;top:10%;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle, rgba(124,77,255,.25), transparent 70%);filter:blur(3px);animation:pulse 6s infinite ease-in-out}
-    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
-    .reveal{opacity:0;transform:translateY(10px);animation:reveal .7s forwards}
-    .reveal.delay-1{animation-delay:.2s}
-    .reveal.delay-2{animation-delay:.4s}
-    @keyframes reveal{to{opacity:1;transform:none}}
+    /* Pencil toggle (theme + popup trigger) */
+    .toggle {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.4rem 0.6rem; border-radius: 10px; background: var(--card); cursor: pointer;
+      box-shadow: 0 6px 18px var(--shadow);
+      user-select: none;
+    }
+    .toggle svg { width: 22px; height: 22px; }
+    .toggle .label { font-weight: 800; font-size: 0.9rem; color: var(--muted); }
 
-    .features,.pricing,.videos,.downloads,.booking-form,.upload-area,.live-player,.testimonials,.course-grid,.cta-banner,.page-hero,.auth-panels{padding:30px 18px}
-    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-    @media (max-width:900px){.grid-3{grid-template-columns:1fr}}
+    /* Hero */
+    .hero { padding: 2.8rem 0 2rem; }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 2rem; align-items: center; }
+    .eyebrow { font-weight: 800; color: var(--crayon-purple); letter-spacing: 0.4px; }
+    .hero h1 { font-size: clamp(2rem, 3.6vw, 3rem); margin: 0.5rem 0; }
+    .hero p { color: var(--muted); max-width: 60ch; }
+    .cta-row { display: flex; gap: 0.8rem; margin-top: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.7rem 1rem; border-radius: 12px; font-weight: 800;
+      border: 1px solid var(--border); background: var(--bg); color: var(--fg);
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+    .btn-primary { background: var(--crayon-blue); color: white; border-color: color-mix(in oklab, var(--crayon-blue) 50%, var(--border)); }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px var(--shadow); }
 
-    .card,.course-card,.price-card{background:var(--card);border:1px solid rgba(0,0,0,0.08);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
-    .pop{transition:transform .2s ease, box-shadow .2s ease}
-    .pop:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.15)}
+    /* Icon strip */
+    .icons {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; margin-top: 1.2rem;
+    }
+    .icon-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 0.9rem;
+      display: flex; align-items: center; gap: 0.8rem; box-shadow: 0 10px 22px var(--shadow);
+      transition: transform 200ms ease;
+    }
+    .icon-card:hover { transform: translateY(-3px) rotate(-0.2deg); }
+    .icon-card svg { width: 26px; height: 26px; }
+    .icon-card .label { font-weight: 800; color: var(--muted); }
 
-    .page-hero{padding:40px 18px}
-    .gradient-gold{background:var(--gradient-gold)}
-    .gradient-mint{background:var(--gradient-mint)}
-    .gradient-sunrise{background:var(--gradient-sunrise)}
+    /* Deep-linkable single-page sections via :target */
+    section.page { display: none; }
+    section.page:target { display: block; }
+    #home:target ~ #home, body:not(:has(section.page:target)) #home { display: block; }
+    @supports not (selector(:has(*))) {
+      section.page { display: none; }
+      #home { display: block; }
+    }
 
-    .responsive-embed{position:relative;padding-bottom:56.25%;height:0}
-    .responsive-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px}
+    /* Shared section styles */
+    .section { padding: 2.5rem 0; }
+    .section h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); margin-bottom: 0.7rem; }
+    .lead { color: var(--muted); max-width: 65ch; }
+    .cards { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem;
+      box-shadow: 0 10px 22px var(--shadow);
+    }
 
-    .site-footer{padding:18px;border-top:1px solid rgba(0,0,0,0.08);background:#fff}
-    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:20px}
-    @media (max-width:900px){.footer-grid{grid-template-columns:1fr}}
-    .copy{color:var(--muted);text-align:center}
+    /* Forms */
+    .form-grid { display: grid; gap: 0.8rem; grid-template-columns: repeat(2, 1fr); }
+    .form-grid .full { grid-column: 1 / -1; }
+    label { font-weight: 800; font-size: 0.85rem; color: var(--muted); }
+    input, select, textarea {
+      width: 100%; padding: 0.7rem 0.8rem; border-radius: 10px; border: 1px solid var(--border);
+      background: #fff; color: var(--fg);
+      transition: box-shadow 160ms ease, border-color 160ms ease;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none; border-color: var(--crayon-purple);
+      box-shadow: 0 0 0 4px color-mix(in oklab, var(--crayon-purple) 22%, transparent);
+    }
 
-    .chat-bubble{position:fixed;right:18px;bottom:18px;z-index:200}
-    .chat-toggle{border:none;background:var(--accent);color:#4a3b00;width:54px;height:54px;border-radius:50%;box-shadow:var(--shadow);cursor:pointer}
-    .chat-window{display:none;position:absolute;right:0;bottom:64px;width:320px;background:var(--card);border:1px solid rgba(0,0,0,0.08);border-radius:12px;box-shadow:var(--shadow)}
-    .chat-header{padding:10px;border-bottom:1px solid rgba(0,0,0,0.08);font-weight:700}
-    .chat-body{height:220px;overflow:auto;padding:10px}
-    .msg{margin-bottom:10px}
-    .msg.user{color:#111}
-    .msg.system{color:var(--muted)}
-    .chat-input{display:flex;border-top:1px solid rgba(0,0,0,0.08)}
-    .chat-input input{flex:1;padding:10px;background:transparent;border:none;color:var(--text)}
-    .chat-input button{border:none;background:var(--primary);color:#053515;padding:10px;border-radius:0 0 12px 0}
+    /* Scholarships CTA */
+    .scholar-cta {
+      display: grid; gap: 1rem; grid-template-columns: 1fr 1fr; align-items: center;
+      background: linear-gradient(120deg,
+        color-mix(in oklab, var(--crayon-yellow) 30%, #fff),
+        color-mix(in oklab, var(--crayon-green) 30%, #fff));
+      border: 1px solid var(--border); border-radius: 16px; padding: 1rem;
+    }
 
-    .modal.hidden{display:none}
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;z-index:300}
-    .modal-content{background:var(--card);padding:18px;border-radius:12px;max-width:500px;width:90%;box-shadow:var(--shadow)}
-    .modal-close{position:absolute;right:18px;top:18px;background:transparent;border:none;color:var(--text);font-size:1.2rem}
+    /* Middle School badge */
+    .badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-weight: 800; color: var(--crayon-purple);
+      background: color-mix(in oklab, var(--crayon-purple) 12%, #fff);
+      border: 1px solid color-mix(in oklab, var(--crayon-purple) 20%, var(--border));
+      border-radius: 999px; padding: 0.35rem 0.7rem;
+    }
 
-    .drop-zone{border:2px dashed rgba(0,0,0,0.15);border-radius:12px;padding:20px;text-align:center;cursor:pointer;background:#f7fbff}
-    .download-list{list-style:none;padding:0;margin:0}
-    .download-list li{display:flex;align-items:center;justify-content:space-between;padding:10px;border-bottom:1px solid rgba(0,0,0,0.08)}
-    .meta{list-style:none;padding:0;margin:10px 0;color:var(--muted);font-size:.95rem}
-    .price{font-size:1.6rem;color:#3e3e3e;font-weight:800}
+    /* Footer */
+    footer { padding: 2rem 0; color: var(--muted); }
 
-    .dots{display:flex;gap:8px;justify-content:center;margin-top:10px}
-    .dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(0,0,0,0.15);cursor:pointer}
-    .dots button.active{background:var(--accent)}
+    /* Animations */
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity 620ms ease, transform 620ms ease; }
+    .reveal.show { opacity: 1; transform: translateY(0); }
 
-    .auth-panels .card{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-    @media (max-width:900px){.auth-panels .card{grid-template-columns:1fr}}
-    .notice{background:#fff8e6;border:1px solid #ffe3a3;color:#7a6400;padding:10px;border-radius:10px}
+    /* Welcome modal base (hidden until JS shows) */
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+      display: none; align-items: center; justify-content: center; z-index: 9999;
+    }
+    .modal {
+      background: #fff; padding: 1.6rem; border-radius: 16px; max-width: 420px; text-align: center;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.22);
+      animation: popIn 280ms ease;
+    }
+    @keyframes popIn { from { transform: scale(0.96); opacity: 0 } to { transform: scale(1); opacity: 1 } }
+
+    /* Scribble animation */
+    @keyframes drawScribble { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
+    #scribblePath { stroke-dasharray: 1000; stroke-dashoffset: 1000; }
+    #scribble.animate { display: block; }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .icons { grid-template-columns: repeat(2, 1fr); }
+      .cards { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .scholar-cta { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
-
 <body>
-  <!-- Header -->
-  <header class="site-header glass">
-    <div class="brand">
-      <a href="#/" class="logo"> <img src="https://i.postimg.cc/XJnwpMtN/Wealth-Options-University.png" alt="Logo" style="width: 25%; height: auto;">
-
-Wealth Options University</a>
-      <span class="tagline">Future • Invest • Blessings</span>
+  <div class="crayon-stripe" aria-hidden="true"></div>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <img src="https://i.postimg.cc/KjWTVC90/creativechristian-center-logo.jpg" alt="Creative Christian Learning Center logo" />
+        <span>Creative Christian Learning Center</span>
+      </div>
+      <div class="links" role="navigation" aria-label="Primary">
+        <a href="#home">Home</a>
+        <a href="#enroll">Enroll</a>
+        <a href="#scholarships">Scholarships</a>
+        <a href="#middle">Middle School</a>
+        <a href="#about">About</a>
+        <a href="#privacy">Privacy</a>
+      </div>
+      <!-- Pencil theme toggle + popup trigger -->
+      <div class="toggle" id="pencilToggle" role="button" tabindex="0" aria-pressed="true" aria-label="Toggle playful colors">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M3 21l3-3h3l9-9a3 3 0 1 0-4.243-4.243l-9 9v3z" stroke-width="2"/>
+          <circle cx="19.5" cy="4.5" r="1.5" fill="currentColor"/>
+        </svg>
+        <span class="label">Color pops</span>
+      </div>
     </div>
-    <nav class="nav">
-      <a href="#/courses">eCourses</a>
-      <a href="#/membership">Membership</a>
-      <a href="#/live">Go Live</a>
-      <a href="#/booking">1-on-1</a>
-      <a href="#/dashboard" class="btn-primary small">Dashboard</a>
-      <a href="#/admin" class="btn-ghost small">Admin</a>
-      <a href="quotex-demo.html">Try Demo Trading</a>
-      <span class="pill">By Mrs. Tiphany Richardson</span>
-    </nav>
-    <button class="nav-toggle" aria-label="Open menu">☰</button>
-  </header>
+  </nav>
 
-  <!-- Sections (multi-page SPA with hash routes) -->
-  <main>
+  <!-- Home -->
+  <section id="home" class="page">
+    <header class="hero container reveal">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">Faith • Curiosity • Excellence</div>
+          <h1>Playful learning with a professional touch</h1>
+          <p>Warm, inviting classrooms with joyful academics and character-building experiences. Explore K–5 enrollment, scholarships, and a self-paced Middle School program in leadership and investing.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#enroll">Start Enrollment</a>
+            <a class="btn" href="#scholarships">Find Scholarships</a>
+            <a class="btn" href="#middle">Middle School Program</a>
+          </div>
 
-    <!-- Home -->
-    <section class="section active" data-route="/">
-      <div class="hero gradient-sunrise container">
-        <div class="hero-content">
-          <h1 class="reveal">Build wealth with guidance you can trust.</h1>
-          <p class="reveal delay-1">Curated eCourses and private coaching by <strong>Mrs. Tiphany Richardson</strong>. Join the community or purchase courses à la carte.</p>
-          <div class="hero-cta reveal delay-2">
-            <a href="#/membership" class="btn-primary">Join Monthly</a>
-            <a href="#/courses" class="btn-ghost">Browse eCourses</a>
+          <div class="icons">
+            <!-- Ruler -->
+            <div class="icon-card reveal">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <rect x="3" y="6" width="18" height="4" rx="2" />
+                <path d="M6 10v4m3-4v2m3-2v4m3-4v2m3-2v4" />
+              </svg>
+              <div class="label">Measure & grow</div>
+            </div>
+            <!-- Apple -->
+            <div class="icon-card reveal">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M16.5 8.5c-2 0-3.5-1.5-3.5-3.5 0-1.5.7-2.7 1.7-3.4M7.5 8.5c2 0 3.5-1.5 3.5-3.5 0-1.5-.7-2.7-1.7-3.4" />
+                <path d="M12 7c-5.5 0-7 4.5-7 7 0 3.5 2.5 6 7 6s7-2.5 7-6c0-2.5-1.5-7-7-7z" />
+              </svg>
+              <div class="label">Healthy habits</div>
+            </div>
+            <!-- Books -->
+            <div class="icon-card reveal">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M4 5h10a3 3 0 0 1 3 3v11H7a3 3 0 0 1-3-3V5z" />
+                <path d="M7 5v11M17 8h3v11" />
+              </svg>
+              <div class="label">Strong academics</div>
+            </div>
+            <!-- Pencil -->
+            <div class="icon-card reveal">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M3 21l3-3h3l9-9a3 3 0 1 0-4.243-4.243l-9 9v3z" />
+              </svg>
+              <div class="label">Creative spirit</div>
+            </div>
           </div>
         </div>
-        <div class="hero-art">
-          <div class="coin-burst"></div>
-          <div class="glow-orb"></div>
+
+        <!-- Hero image with playful frame -->
+        <div class="card reveal" style="min-height: 240px;">
+          <img src="https://i.postimg.cc/KjWTVC90/creativechristian-center-logo.jpg" alt="Creative Christian Learning Center hero logo" style="border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 10px 24px var(--shadow);" />
         </div>
       </div>
+    </header>
+  </section>
 
-      <section class="features container">
-        <h2>Why Wealth Options University</h2>
-        <div class="grid-3">
-          <div class="card pop">
-            <h3>Premium Curriculum</h3>
-            <p>Step-by-step lessons, screen recordings, and templates you can download.</p>
-          </div>
-          <div class="card pop">
-            <h3>Live Support</h3>
-            <p>Go live with the community and book 1-on-1 sessions after your purchase.</p>
-          </div>
-          <div class="card pop">
-            <h3>Flexible Access</h3>
-            <p>Monthly membership or single course—choose the path that fits your goals.</p>
-          </div>
-        </div>
-      </section>
+  <!-- Enroll (K–5) -->
+  <section id="enroll" class="page">
+    <div class="container section reveal">
+      <h2>K–5 Enrollment</h2>
+      <p class="lead">Enroll your child in Creative Christian Learning Center. Foundational skills, joyful learning, and a nurturing environment.</p>
 
-      <section class="cta-banner gradient-mint container">
-        <h2>Ready to take action?</h2>
-        <p>Join now to unlock members-only resources and weekly live sessions.</p>
-        <a href="#/membership" class="btn-primary">Become a Member</a>
-      </section>
-
-      <section class="testimonials container">
-        <h2>Student wins</h2>
-        <div class="carousel">
-          <div class="slide active">
-            <blockquote>“I launched my first product after Module 2. Clear, empowering lessons!”</blockquote>
-            <cite>— A. Daniels</cite>
-          </div>
-          <div class="slide">
-            <blockquote>“The 1-on-1 session changed my roadmap completely.”</blockquote>
-            <cite>— L. Perez</cite>
-          </div>
-          <div class="slide">
-            <blockquote>“Membership keeps me accountable. The live Q&As are gold.”</blockquote>
-            <cite>— S. Moore</cite>
-          </div>
-        </div>
-        <div class="dots"></div>
-      </section>
-    </section>
-
-    <!-- eCourses -->
-    <section class="section" data-route="/courses">
-      <section class="page-hero gradient-gold container">
-        <h1>Choose your course</h1>
-        <p>Purchase to unlock recorded videos, downloads, and booking privileges.</p>
-      </section>
-
-      <section class="course-grid container">
-        <div class="course-card pop" data-price="price_course_foundations">
-          <h3>Wealth Foundations</h3>
-          <p>Mindset, budgeting, and compounding strategies.</p>
-          <ul class="meta">
-            <li>3 hours video • 8 downloads</li>
-            <li>Beginner friendly</li>
-          </ul>
-          <button class="btn-primary start-checkout" data-course-id="foundations">Buy eCourse</button>
-        </div>
-
-        <div class="course-card pop" data-price="price_course_digitalincome">
-          <h3>Digital Income Playbook</h3>
-          <p>Launch your first digital product with templates.</p>
-          <ul class="meta">
-            <li>4.5 hours video • 12 downloads</li>
-            <li>Intermediate</li>
-          </ul>
-          <button class="btn-primary start-checkout" data-course-id="digitalincome">Buy eCourse</button>
-        </div>
-
-        <div class="course-card pop" data-price="price_course_investing101">
-          <h3>Investing 101</h3>
-          <p>Intro to stocks, ETFs, and risk management.</p>
-          <ul class="meta">
-            <li>3.5 hours video • 10 downloads</li>
-            <li>Beginner</li>
-          </ul>
-          <button class="btn-primary start-checkout" data-course-id="investing101">Buy eCourse</button>
-        </div>
-      </section>
-
-      <section class="container">
-        <p>After purchase, visit your <a href="#/dashboard">Dashboard</a> to access videos, downloads, and booking.</p>
-      </section>
-    </section>
-
-    <!-- Membership -->
-    <section class="section" data-route="/membership">
-      <section class="page-hero gradient-mint container">
-        <h1>Membership: Stay supported every month</h1>
-        <p>Exclusive live sessions, member-only downloads, and priority booking.</p>
-      </section>
-
-      <section class="pricing container">
-        <div class="price-card pop" data-price="price_membership_monthly">
-          <h3>Monthly</h3>
-          <p class="price">$49 / month</p>
-          <ul class="meta">
-            <li>Weekly live Q&A</li>
-            <li>Member-only vault</li>
-            <li>Priority support</li>
-          </ul>
-          <button class="btn-primary start-checkout" data-membership="monthly">Subscribe</button>
-        </div>
-      </section>
-
-      <section class="faq container">
-        <h2>Membership FAQ</h2>
-        <details>
-          <summary>What’s included?</summary>
-          <p>Access to live sessions, selected member-only courses, and premium templates.</p>
-        </details>
-        <details>
-          <summary>Cancel anytime?</summary>
-          <p>Yes, you can manage your subscription from your Dashboard.</p>
-        </details>
-      </section>
-    </section>
-
-    <!-- Dashboard -->
-    <section class="section" data-route="/dashboard">
-      <section class="page-hero gradient-gold container">
-        <h1>Welcome back, <span id="user-name">Student</span></h1>
-        <p id="access-note" class="access-note">Loading your access...</p>
-        <div style="margin-top:10px">
-          <span class="pill">Dashboard</span>
-          <button id="logout" class="btn-ghost small" style="margin-left:10px">Logout</button>
-        </div>
-      </section>
-
-      <section class="auth-panels container">
+      <div class="cards">
         <div class="card">
-          <div>
-            <h3>Member sign in</h3>
-            <p class="muted">Use the email from your purchase to access courses and downloads.</p>
-            <label><span>Email</span><input type="email" id="login-email" placeholder="Email" /></label>
-            <label><span>Password</span><input type="password" id="login-pass" placeholder="Password" /></label>
-            <button id="login-submit" class="btn-primary">Sign in</button>
-            <p class="small">Accounts are created automatically after Stripe checkout.</p>
-          </div>
-          <div>
-            <h3>Admin sign in</h3>
-            <p class="muted">For Mrs. Richardson to upload videos and manage content.</p>
-            <label><span>Admin email</span><input type="email" id="admin-email" placeholder="admin@example.com" /></label>
-            <label><span>Admin password</span><input type="password" id="admin-pass" placeholder="••••••••" /></label>
-            <button id="admin-submit" class="btn-ghost">Sign in as Admin</button>
-            <p class="small notice">Secure this with server-side verification and roles in production.</p>
-          </div>
+          <h3>Parent enrollment form</h3>
+          <form id="form-enroll" aria-label="K–5 Parent Enrollment">
+            <div class="form-grid">
+              <div>
+                <label for="enrollName">Parent full name</label>
+                <input id="enrollName" name="parent_name" type="text" placeholder="Full Name" required />
+              </div>
+              <div>
+                <label for="msName">Child name</label>
+                <input id="msName" name="child_name" type="text" placeholder="Child full name" required />
+              </div>
+              <div>
+                <label for="enrollEmail">Email</label>
+                <input id="enrollEmail" name="email" type="email" placeholder="name@example.com" required />
+              </div>
+              <div>
+                <label for="enrollPhone">Phone</label>
+                <input id="enrollPhone" name="phone" type="tel" placeholder="(555) 555-5555" required />
+              </div>
+              <div>
+                <label for="childAge">Child age</label>
+                <input id="childAge" name="child_age" type="number" min="4" max="12" placeholder="6" required />
+              </div>
+              <div>
+                <label for="childGrade">Child grade</label>
+                <select id="childGrade" name="child_grade" required>
+                  <option value="">Select grade</option>
+                  <option>K</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+                </select>
+              </div>
+              <div class="full">
+                <label for="notes">Notes (optional)</label>
+                <textarea id="notes" name="notes" rows="3" placeholder="Share any learning preferences or needs..."></textarea>
+              </div>
+            </div>
+            <div style="margin-top: 0.8rem;">
+              <button class="btn btn-primary" type="submit">Submit enrollment</button>
+            </div>
+          </form>
         </div>
-      </section>
 
-      <section class="videos container">
-        <h2>Your recorded videos</h2>
-        <div id="video-list" class="grid-3"></div>
-      </section>
-
-      <section class="downloads container">
-        <h2>Downloads</h2>
-        <ul id="download-list" class="download-list"></ul>
-      </section>
-
-      <section class="actions container">
-        <a href="#/booking" class="btn-primary">Book a 1-on-1</a>
-        <a href="#/live" class="btn-ghost">Join Live</a>
-        <a href="#/admin" class="btn-ghost">Admin Uploads</a>
-      </section>
-    </section>
-
-    <!-- Booking -->
-    <section class="section" data-route="/booking">
-      <section class="page-hero gradient-mint container">
-        <h1>Book your 1-on-1</h1>
-        <p>Available to members and course purchasers.</p>
-      </section>
-
-      <section class="booking-form pop container">
-        <h2>Schedule</h2>
-        <form id="booking-form">
-          <label>
-            <span>Name</span>
-            <input type="text" name="name" required />
-          </label>
-          <label>
-            <span>Email</span>
-            <input type="email" name="email" required />
-          </label>
-          <label>
-            <span>Course or Membership</span>
-            <select name="entitlement" required>
-              <option value="">Select...</option>
-              <option value="membership">Membership</option>
-              <option value="foundations">Wealth Foundations</option>
-              <option value="digitalincome">Digital Income Playbook</option>
-              <option value="investing101">Investing 101</option>
-            </select>
-          </label>
-          <label>
-            <span>Date</span>
-            <input type="date" name="date" required />
-          </label>
-          <label>
-            <span>Time</span>
-            <input type="time" name="time" required />
-          </label>
-          <label>
-            <span>Notes</span>
-            <textarea name="notes" placeholder="What do you want to focus on?"></textarea>
-          </label>
-          <button class="btn-primary">Request booking</button>
-        </form>
-        <p class="small">You’ll receive a confirmation email if your entitlement is valid.</p>
-      </section>
-    </section>
-
-    <!-- Live -->
-    <section class="section" data-route="/live">
-      <section class="page-hero gradient-gold container">
-        <h1>We’re live</h1>
-        <p>Members get priority access. Check your Dashboard for upcoming schedule.</p>
-      </section>
-
-      <section class="live-player pop container">
-        <div class="responsive-embed">
-          <!-- Example YouTube Live embed; replace with your live source -->
-          <iframe src="https://www.youtube.com/embed/live_stream?channel=YOUR_CHANNEL_ID" title="Live Stream" frameborder="0" allowfullscreen></iframe>
+        <div class="card">
+          <h3>Waitlist</h3>
+          <form id="form-waitlist" aria-label="K–5 Waitlist">
+            <div class="form-grid">
+              <div>
+                <label for="wlFirst">Parents Name</label>
+                <input id="wlFirst" name="firstlast_name" type="text" placeholder="First and last name" required />
+              </div>
+              <div>
+                <label for="msName">Child Name</label>
+                <input id="msName" name="student_name" type="text" placeholder="Student full name" required />
+              </div>
+              <div>
+                <label for="wlLast">Grade Level</label>
+                <input id="wlLast" name="Grade_level" type="text" placeholder="Grade level" required />
+              </div>
+              <div>
+                <label for="wlPhone">Phone</label>
+                <input id="wlPhone" name="phone" type="tel" placeholder="(555) 555-5555" required />
+              </div>
+              <div>
+                <label for="wlEmail">Email</label>
+                <input id="wlEmail" name="email" type="email" placeholder="name@example.com" required />
+              </div>
+              <div>
+                <label for="wlAge">Child age</label>
+                <input id="wlAge" name="child_age" type="number" min="4" max="12" placeholder="7" required />
+              </div>
+              <div>
+                <label for="wlStart">Anticipated start date</label>
+                <input id="wlStart" name="start_date" type="date" required />
+              </div>
+            </div>
+            <div style="margin-top: 0.8rem;">
+              <button class="btn btn-primary" type="submit">Join waitlist</button>
+            </div>
+          </form>
         </div>
-        <div class="live-chat">
-          <h3>Live chat</h3>
-          <div id="live-chat-body" class="chat-body"></div>
-          <div class="chat-input">
-            <input type="text" id="live-chat-text" placeholder="Say hello..." />
-            <button id="live-chat-send">Send</button>
-          </div>
+
+        <div class="card">
+          <h3>Why families choose us</h3>
+          <ul>
+            <li><strong>Faith-centered:</strong> Character and community, cultivated daily.</li>
+            <li><strong>Foundational skills:</strong> Reading, math, and curiosity-first learning.</li>
+            <li><strong>Warm environment:</strong> Professional, playful, and welcoming to all.</li>
+          </ul>
         </div>
-      </section>
-    </section>
-
-    <!-- Admin uploads (requires admin sign-in) -->
-    <section class="section" data-route="/admin">
-      <section class="page-hero gradient-mint container">
-        <h1>Upload recorded videos</h1>
-        <p>Drag-and-drop or browse files. Videos attach to selected courses.</p>
-      </section>
-
-      <section class="upload-area pop container">
-        <div id="admin-guard" class="notice" style="margin-bottom:12px">Admin access required. Sign in from the Dashboard.</div>
-        <form id="upload-form" style="display:none">
-          <label>
-            <span>Course</span>
-            <select name="course" required>
-              <option value="">Select course...</option>
-              <option value="foundations">Wealth Foundations</option>
-              <option value="digitalincome">Digital Income Playbook</option>
-              <option value="investing101">Investing 101</option>
-            </select>
-          </label>
-
-          <div id="drop-zone" class="drop-zone">
-            <p>Drop files here or click to browse</p>
-            <input type="file" id="video-file" accept="video/*" hidden />
-          </div>
-
-          <label>
-            <span>Title</span>
-            <input type="text" name="title" placeholder="Lesson title" required />
-          </label>
-          <label>
-            <span>Description</span>
-            <textarea name="description" placeholder="Short description"></textarea>
-          </label>
-
-          <button class="btn-primary">Upload video</button>
-          <p id="upload-status" class="small"></p>
-        </form>
-
-        <section class="admin-list">
-          <h2>Existing content</h2>
-          <ul id="admin-video-list" class="download-list"></ul>
-        </section>
-      </section>
-    </section>
-
-  </main>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="footer-grid container">
-      <div>
-        <strong>Wealth Options University</strong>
-        <p>By Mrs. Tiphany Richardson</p>
-      </div>
-      <div>
-        <p><a href="#/courses">eCourses</a> • <a href="#/membership">Membership</a> • <a href="#/booking">1-on-1</a></p>
-        <p><a href="#/live">Go Live</a> • <a href="#/dashboard">Dashboard</a> • <a href="#/admin">Admin</a></p>
-      </div>
-      <div>
-        <p><a href="#" id="open-privacy">Privacy</a> • <a href="#" id="open-terms">Terms</a></p>
       </div>
     </div>
-    <p class="copy">© <span id="year"></span> Wealth Options University</p>
+  </section>
+
+  <!-- Scholarships -->
+  <section id="scholarships" class="page">
+    <div class="container section reveal">
+      <h2>Scholarships for K–5</h2>
+      <p class="lead">Many families qualify for tuition support. Explore Step Up For Students options, including UA and PEP Scholarship programs.</p>
+
+      <div class="scholar-cta">
+        <div>
+          <h3>Step Up For Students</h3>
+          <p>Learn about Florida scholarship pathways and how to apply. K–5 families can find programs designed to support early learning and literacy.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="https://www.stepupforstudents.org/scholarships/" target="_blank" rel="noopener">Go to Step Up For Students</a>
+            <a class="btn" href="#enroll">Continue enrollment</a>
+          </div>
+        </div>
+        <div class="card">
+          <h4 style="margin-top:0;">Quick tips</h4>
+          <ul>
+            <li><strong>UA Scholarship:</strong> Supports students with unique abilities.</li>
+            <li><strong>PEP Scholarship:</strong> Personalized education program through an ESA.</li>
+            <li><strong>Docs ready:</strong> Have ID, residency, and prior school info handy.</li>
+          </ul>
+          <p style="color: var(--muted); font-size: 0.9rem;">Program availability and details can change; review the official Step Up page before applying.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Middle School -->
+  <section id="middle" class="page">
+    <div class="container section reveal">
+      <div class="badge">Grades 6–8 • Open Enrollment</div>
+      <h2>Self-study: Leadership development and investing strategies</h2>
+      <p class="lead">A self-paced program focused on leadership mindsets, decision-making, financial literacy, and beginner-friendly investing concepts—guided with projects and reflection.</p>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Enroll in the 6–8 program</h3>
+          <form id="form-middle" aria-label="Middle School Enrollment">
+            <div class="form-grid">
+              <div>
+                <label for="msName">Student name</label>
+                <input id="msName" name="student_name" type="text" placeholder="Student full name" required />
+              </div>
+              <div>
+                <label for="msEmail">Parent email</label>
+                <input id="msEmail" name="email" type="email" placeholder="parent@example.com" required />
+              </div>
+              <div>
+                <label for="msPhone">Parent phone</label>
+                <input id="msPhone" name="phone" type="tel" placeholder="(555) 555-5555" required />
+              </div>
+              <div>
+                <label for="msGrade">Grade</label>
+                <select id="msGrade" name="grade" required>
+                  <option value="">Select grade</option>
+                  <option>6</option><option>7</option><option>8</option>
+                </select>
+              </div>
+              <div class="full">
+                <label for="msInterest">Goals (optional)</label>
+                <textarea id="msInterest" name="goals" rows="3" placeholder="Tell us what you hope to learn and build..."></textarea>
+              </div>
+            </div>
+            <div style="margin-top: 0.8rem;">
+              <button class="btn btn-primary" type="submit">Enroll in self-study</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>What students explore</h3>
+          <ul>
+            <li><strong>Leadership:</strong> Values, vision, and practical teamwork.</li>
+            <li><strong>Investing basics:</strong> Risk, compounding, and simple portfolios.</li>
+            <li><strong>Projects:</strong> Challenges, reflections, and community impact ideas.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>How it works</h3>
+          <ul>
+            <li><strong>Self-paced:</strong> Flexible weekly time.</li>
+            <li><strong>Guides:</strong> Clear prompts and checklists.</li>
+            <li><strong>Support:</strong> Parent and mentor touchpoints.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="page">
+    <div class="container section reveal">
+      <h2>About Mrs. Tiphany Richardson</h2>
+      <p class="lead">Mrs. Richardson leads Creative Christian Learning Center with a heart for faith-driven education, joyful rigor, and nurturing every child’s potential.</p>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Our mission</h3>
+          <p>To partner with families in building character, curiosity, and academic confidence—preparing children to serve, lead, and thrive.</p>
+        </div>
+        <div class="card">
+          <h3>Our approach</h3>
+          <p>Professional standards with playful energy: structured foundations in reading and math, hands-on projects, and warm community.</p>
+        </div>
+        <div class="card">
+          <h3>Contact</h3>
+          <p>Email us anytime with questions about enrollment, scholarships, or programs. We’re honored to serve your family.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy (FERPA-aware) -->
+  <section id="privacy" class="page">
+    <div class="container section reveal">
+      <h2>Privacy policy</h2>
+      <p class="lead">We respect your family’s privacy. We handle education records consistent with FERPA and limit access to those with a legitimate educational interest.</p>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Our commitments</h3>
+          <ul>
+            <li><strong>Access rights:</strong> Parents can access and request correction of their child’s education records.</li>
+            <li><strong>Consent:</strong> We obtain written consent before sharing personally identifiable information, except where FERPA allows.</li>
+            <li><strong>Security:</strong> Encryption in transit, strict role-based access, audit logging, and least-privilege permissions.</li>
+            <li><strong>Training:</strong> Staff receive privacy training and follow secure handling practices.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Contact for privacy requests</h3>
+          <p>To request access or an amendment, or to ask a privacy question, contact the school office. We respond promptly and within required timeframes.</p>
+        </div>
+        <div class="card">
+          <h3>Notice</h3>
+          <p>We provide annual notices of rights and updates to our privacy policy. Families are encouraged to review scholarship sites’ privacy policies separately.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="container">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
+      <p>© <span id="year"></span> Creative Christian Learning Center. All rights reserved. • <a href="#privacy">Privacy policy</a></p>
+      <div style="display:flex; gap:0.6rem;">
+        <a class="btn" href="#home">Home</a>
+        <a class="btn" href="#enroll">Enroll</a>
+        <a class="btn" href="#scholarships">Scholarships</a>
+        <a class="btn" href="#middle">Middle School</a>
+      </div>
+    </div>
   </footer>
 
-  <!-- Chat bubble -->
-  <div id="chat-bubble" class="chat-bubble">
-    <button id="chat-toggle" class="chat-toggle">💬</button>
-    <div class="chat-window">
-      <div class="chat-header">Live Chat</div>
-      <div class="chat-body" id="chat-body">
-        <div class="msg system">Welcome! Ask us anything.</div>
-      </div>
-      <div class="chat-input">
-        <input type="text" id="chat-text" placeholder="Type your message..." />
-        <button id="chat-send">Send</button>
+  <!-- Welcome modal -->
+  <div id="welcomeModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" aria-hidden="true">
+    <div class="modal">
+      <h2 id="welcomeTitle" style="margin-top:0;">Welcome to Creative Christian Learning Center!</h2>
+      <p style="margin: 0.5rem 0 1.2rem;">We’re excited to have you here. Ready to enroll your child?</p>
+      <a href="#enroll" class="btn btn-primary" style="text-decoration:none;">Go to Enrollment</a>
+      <div style="margin-top:1rem;">
+        <button id="closeWelcome" class="btn">Close</button>
       </div>
     </div>
   </div>
 
-  <!-- Policy modal -->
-  <div class="modal hidden" id="policy-modal">
-    <div class="modal-content">
-      <button class="modal-close" id="policy-close">×</button>
-      <h3 id="policy-title">Policy</h3>
-      <div id="policy-body"></div>
-    </div>
-  </div>
+  <!-- Scribble SVG -->
+  <svg id="scribble" viewBox="0 0 300 100" width="300" height="100"
+       style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+              pointer-events: none; z-index: 9998; display: none;">
+    <path id="scribblePath"
+          d="M10,50 Q60,10 110,50 T210,50 T310,50"
+          stroke="currentColor" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"
+          style="color: var(--crayon-red);" />
+  </svg>
 
-  <!-- Scripts -->
   <script>
-    // SPA router
-    function setActiveRoute(){
-      const hash = location.hash.replace('#','') || '/';
-      const route = hash.startsWith('/') ? hash : '/';
-      document.querySelectorAll('.section').forEach(s => {
-        s.classList.toggle('active', s.dataset.route === route);
-      });
-      switch(route){
-        case '/courses':
-        case '/membership':
-          initStripeButtons();
-          break;
-        case '/dashboard':
-          initDashboard();
-          break;
-        case '/booking':
-          initBooking();
-          break;
-        case '/live':
-          initLiveChat();
-          break;
-        case '/admin':
-          initAdminUploads();
-          break;
-      }
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Elements
+    const bodyEl = document.body;
+    const toggle = document.getElementById('pencilToggle');
+    const welcomeModal = document.getElementById('welcomeModal');
+    const closeWelcome = document.getElementById('closeWelcome');
+
+    // Theme switcher + popup on toggle
+    function setTheme(playful) {
+      bodyEl.classList.toggle('theme-minimal', !playful);
+      toggle.setAttribute('aria-pressed', playful ? 'true' : 'false');
+      toggle.querySelector('.label').textContent = playful ? 'Color pops' : 'Minimal';
     }
-    window.addEventListener('hashchange', setActiveRoute);
+    let playful = true;
+    setTheme(playful);
 
-    // Global state
-    const state = {
-      user: null,           // { email, name, roles: [] }
-      entitlements: [],     // ['membership', 'foundations', 'digitalincome', 'investing101']
-      videos: [],           // populated after verify-access
-      downloads: [],        // populated after verify-access
-      isAdmin: false
-    };
+    function toggleTheme() {
+      playful = !playful;
+      setTheme(playful);
+      showWelcomePopup();
+      playScribble();
+    }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('year')?.appendChild(document.createTextNode(new Date().getFullYear()));
-      initNavToggle();
-      initChatBubble();
-      initCarousel();
-      initPolicyModals();
-      setActiveRoute();
+    toggle.addEventListener('click', toggleTheme);
+    toggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleTheme();
+      }
     });
 
-    // Mobile nav toggle
-    function initNavToggle(){
-      const toggle = document.querySelector('.nav-toggle');
-      const nav = document.querySelector('.nav');
-      if (!toggle || !nav) return;
-      toggle.addEventListener('click', () => {
-        const open = nav.style.display === 'block';
-        nav.style.display = open ? 'none' : 'block';
-      });
+    // Popup logic
+    function showWelcomePopup() {
+      welcomeModal.style.display = 'flex';
+      welcomeModal.setAttribute('aria-hidden', 'false');
+    }
+    function closePopup() {
+      welcomeModal.style.display = 'none';
+      welcomeModal.setAttribute('aria-hidden', 'true');
+    }
+    closeWelcome.addEventListener('click', closePopup);
+    welcomeModal.addEventListener('click', (e) => {
+      if (e.target === welcomeModal) closePopup(); // click backdrop to close
+    });
+
+    // Scribble animation
+    function playScribble() {
+      const scribble = document.getElementById('scribble');
+      const path = document.getElementById('scribblePath');
+      scribble.classList.add('animate');
+      scribble.style.display = 'block';
+      path.style.animation = 'drawScribble 1.1s ease forwards';
+
+      setTimeout(() => {
+        scribble.classList.remove('animate');
+        scribble.style.display = 'none';
+        path.style.animation = '';
+      }, 1400);
     }
 
-    // Simple carousel
-    function initCarousel(){
-      const slides = document.querySelectorAll('.carousel .slide');
-      const dots = document.querySelector('.dots');
-      if (!slides.length || !dots) return;
-      if (dots.childElementCount) return; // avoid duplicates on re-init
-      slides.forEach((_, i) => {
-        const b = document.createElement('button');
-        b.addEventListener('click', () => {
-          slides.forEach(s => s.classList.remove('active'));
-          dots.querySelectorAll('button').forEach(d => d.classList.remove('active'));
-          slides[i].classList.add('active'); b.classList.add('active');
-        });
-        dots.appendChild(b);
+    // Scroll reveal animations
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
       });
-      dots.querySelector('button')?.classList.add('active');
-    }
+    }, { threshold: 0.15 });
+    reveals.forEach(el => io.observe(el));
 
-    // Policy modals
-    function initPolicyModals(){
-      const modal = document.getElementById('policy-modal');
-      const body = document.getElementById('policy-body');
-      const title = document.getElementById('policy-title');
-      const openPrivacy = document.getElementById('open-privacy');
-      const openTerms = document.getElementById('open-terms');
-      const close = document.getElementById('policy-close');
-      if (!modal) return;
-      openPrivacy?.addEventListener('click', (e)=>{e.preventDefault();title.textContent='Privacy';body.innerHTML='<p>We respect your privacy. Your data is used only to provide services and support.</p>';modal.classList.remove('hidden');});
-      openTerms?.addEventListener('click', (e)=>{e.preventDefault();title.textContent='Terms';body.innerHTML='<p>By purchasing, you agree to our refund policy and usage terms.</p>';modal.classList.remove('hidden');});
-      close?.addEventListener('click', ()=>modal.classList.add('hidden'));
-    }
-
-    // Live chat bubble
-    function initChatBubble(){
-      const toggle = document.getElementById('chat-toggle');
-      const windowEl = document.querySelector('.chat-window');
-      const send = document.getElementById('chat-send');
-      const input = document.getElementById('chat-text');
-      const body = document.getElementById('chat-body');
-      if (!toggle || !windowEl) return;
-      toggle.addEventListener('click', () => {
-        windowEl.style.display = windowEl.style.display === 'block' ? 'none' : 'block';
-      });
-      send?.addEventListener('click', () => {
-        const text = (input?.value || '').trim();
-        if (!text) return;
-        addMsg(body, 'user', text);
-        input.value = '';
-        setTimeout(()=>addMsg(body, 'system', 'Thanks! We’ll be with you shortly.'), 600);
-      });
-    }
-    function addMsg(container, type, text){
-      const div = document.createElement('div');
-      div.className = `msg ${type}`;
-      div.textContent = text;
-      container.appendChild(div);
-      container.scrollTop = container.scrollHeight;
-    }
-
-    // Stripe Checkout session creation
-    function initStripeButtons(){
-      if (window.__stripeInitialized) return;
-      window.__stripeInitialized = true;
-      const stripe = Stripe('pk_test_REPLACE_WITH_YOUR_PUBLISHABLE_KEY');
-      document.querySelectorAll('.start-checkout').forEach(btn => {
-        btn.addEventListener('click', async () => {
-          const courseId = btn.dataset.courseId || btn.dataset.membership;
-          const priceLookup = btn.closest('[data-price]')?.dataset.price;
-          try {
-            const res = await fetch('/.netlify/functions/create-checkout-session', {
-              method: 'POST',
-              headers: {'Content-Type':'application/json'},
-              body: JSON.stringify({
-                priceId: priceLookup,
-                itemId: courseId,
-                mode: btn.dataset.membership ? 'subscription' : 'payment',
-                success_url: window.location.origin + '/#/dashboard?success=true',
-                cancel_url: window.location.href
-              })
-            });
-            const data = await res.json();
-            if (data.sessionId) {
-              stripe.redirectToCheckout({ sessionId: data.sessionId });
-            } else {
-              alert('Unable to start checkout. Please try again.');
-            }
-          } catch(err){
-            console.error(err);
-            alert('Checkout error. Please try again.');
-          }
-        });
-      });
-    }
-
-    // Dashboard: user & admin sign-in + load entitlements
-    function initDashboard(){
-      const loginSubmit = document.getElementById('login-submit');
-      const adminSubmit = document.getElementById('admin-submit');
-      const logout = document.getElementById('logout');
-
-      // Load any existing session
-      const savedUser = localStorage.getItem('wou_user');
-      const savedAdmin = localStorage.getItem('wou_admin');
-      if (savedUser){
-        state.user = JSON.parse(savedUser);
-        document.getElementById('user-name').textContent = state.user.name || 'Student';
-        loadAccess();
-      } else {
-        document.getElementById('access-note').textContent = 'Sign in to view your content.';
-      }
-      if (savedAdmin){
-        state.isAdmin = true;
-      }
-
-      loginSubmit?.addEventListener('click', async ()=>{
-        const email = document.getElementById('login-email').value.trim();
-        const pass = document.getElementById('login-pass').value.trim();
-        if (!email || !pass) return alert('Enter email and password');
-        // In production: verify via backend before creating session
-        state.user = { email, name: email.split('@')[0], roles: ['student'] };
-        localStorage.setItem('wou_user', JSON.stringify(state.user));
-        document.getElementById('user-name').textContent = state.user.name;
-        loadAccess();
-      });
-
-      adminSubmit?.addEventListener('click', async ()=>{
-        const email = document.getElementById('admin-email').value.trim();
-        const pass = document.getElementById('admin-pass').value.trim();
-        if (!email || !pass) return alert('Enter admin email & password');
-        // In production: verify admin credentials server-side and set a secure token
-        state.isAdmin = true;
-        localStorage.setItem('wou_admin', JSON.stringify({ email }));
-        alert('Admin signed in. Visit the Admin Uploads page.');
-      });
-
-      logout?.addEventListener('click', ()=>{
-        localStorage.removeItem('wou_user');
-        localStorage.removeItem('wou_admin');
-        state.user = null; state.isAdmin = false;
-        location.hash = '#/';
-      });
-    }
-
-    async function loadAccess(){
-      document.getElementById('access-note').textContent = 'Verifying your purchases...';
-      try {
-        const res = await fetch('/.netlify/functions/verify-access', {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({ email: state.user.email })
-        });
-        const data = await res.json();
-        state.entitlements = data.entitlements || [];
-        state.videos = data.videos || [];
-        state.downloads = data.downloads || [];
-        renderContent();
-      } catch(err){
-        console.error(err);
-        document.getElementById('access-note').textContent = 'Unable to verify access. Please contact support.';
-      }
-    }
-
-    function renderContent(){
-      const note = document.getElementById('access-note');
-      if (!state.entitlements.length) {
-        note.innerHTML = 'No active purchases found. Visit <a href="#/courses">eCourses</a> or <a href="#/membership">Membership</a>.';
-      } else {
-        note.textContent = 'Access granted.';
-      }
-
-      const videoList = document.getElementById('video-list');
-      videoList.innerHTML = '';
-      state.videos.forEach(v => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <h3>${v.title}</h3>
-          <p>${v.description || ''}</p>
-          <video controls src="${v.secureUrl}" preload="metadata" style="width:100%;border-radius:12px"></video>
-          <div style="margin-top:8px">
-            <a class="btn-ghost" href="${v.downloadUrl}" download>Download video</a>
-          </div>
-        `;
-        videoList.appendChild(card);
-      });
-
-      const dl = document.getElementById('download-list');
-      dl.innerHTML = '';
-      state.downloads.forEach(d => {
-        const li = document.createElement('li');
-        li.innerHTML = `<span>${d.name}</span><a class="btn-ghost" href="${d.url}" download>Download</a>`;
-        dl.appendChild(li);
-      });
-    }
-
-    // Booking handler (demo; gate on entitlement)
-    function initBooking(){
-      const form = document.getElementById('booking-form');
+    // Basic form handlers (prevent page reload; demo only)
+    function attachForm(id, msg) {
+      const form = document.getElementById(id);
       if (!form) return;
-      form.addEventListener('submit', async (e)=>{
+      form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const fd = new FormData(form);
-        const payload = Object.fromEntries(fd.entries());
-        // In production: verify entitlement server-side, then create event or send confirmation
-        alert('Booking request submitted. You will be notified by email.');
+        alert(msg + '\nWe will contact you shortly.'); // replace with real submission
         form.reset();
       });
     }
-
-    // Live page chat (simple local chat)
-    function initLiveChat(){
-      const send = document.getElementById('live-chat-send');
-      const input = document.getElementById('live-chat-text');
-      const body = document.getElementById('live-chat-body');
-      send?.addEventListener('click', ()=>{
-        const text = (input.value || '').trim();
-        if (!text) return;
-        addMsg(body, 'user', text);
-        input.value = '';
-        setTimeout(()=>addMsg(body, 'system', 'Great point!'), 600);
-      });
-    }
-
-    // Admin uploads: require admin session + signed Cloudinary upload
-    function initAdminUploads(){
-      const guard = document.getElementById('admin-guard');
-      const form = document.getElementById('upload-form');
-      const drop = document.getElementById('drop-zone');
-      const fileInput = document.getElementById('video-file');
-      const status = document.getElementById('upload-status');
-      const list = document.getElementById('admin-video-list');
-
-      const savedAdmin = localStorage.getItem('wou_admin');
-      if (!savedAdmin){
-        guard.style.display = 'block';
-        form.style.display = 'none';
-        return;
-      }
-      guard.style.display = 'none';
-      form.style.display = 'block';
-
-      drop.addEventListener('click', ()=>fileInput.click());
-      ['dragenter','dragover'].forEach(evt => drop.addEventListener(evt, e => { e.preventDefault(); drop.style.borderColor = 'var(--primary)'; }));
-      ['dragleave','drop'].forEach(evt => drop.addEventListener(evt, e => { e.preventDefault(); drop.style.borderColor = 'rgba(0,0,0,0.15)'; }));
-      drop.addEventListener('drop', e => { fileInput.files = e.dataTransfer.files; });
-
-      form.addEventListener('submit', async (e)=>{
-        e.preventDefault();
-        const fd = new FormData(form);
-        const course = fd.get('course');
-        const title = fd.get('title');
-        const description = fd.get('description');
-        const file = fileInput.files[0];
-        if (!file) return alert('Select a video file');
-
-        status.textContent = 'Requesting upload signature...';
-
-        try {
-          const sigRes = await fetch('/.netlify/functions/cloudinary-signature', { method:'POST' });
-          const { timestamp, signature, cloudName, apiKey, folder } = await sigRes.json();
-
-          status.textContent = 'Uploading... (this may take a while)';
-          const cloudUrl = `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`;
-
-          const upl = new FormData();
-          upl.append('file', file);
-          upl.append('api_key', apiKey);
-          upl.append('timestamp', timestamp);
-          upl.append('signature', signature);
-          upl.append('folder', folder);
-          upl.append('resource_type', 'video');
-
-          const res = await fetch(cloudUrl, { method:'POST', body: upl });
-          const data = await res.json();
-          if (data.secure_url){
-            status.textContent = 'Upload complete. Saving record...';
-
-            // Save mapping (course -> video)
-            const saveRes = await fetch('/.netlify/functions/verify-access', {
-              method:'POST',
-              headers:{'Content-Type':'application/json'},
-              body: JSON.stringify({ adminSave:true, course, video: {
-                title, description,
-                secureUrl: data.secure_url,
-                downloadUrl: data.secure_url
-              }})
-            });
-            await saveRes.json();
-
-            status.textContent = 'Saved! Video is now available to entitled users.';
-            const li = document.createElement('li');
-            li.innerHTML = `<span>${title} (${course})</span><a class="btn-ghost" href="${data.secure_url}" target="_blank">View</a>`;
-            list.prepend(li);
-            form.reset(); fileInput.value = '';
-          } else {
-            status.textContent = 'Upload failed. Try again.';
-          }
-        } catch(err){
-          console.error(err);
-          status.textContent = 'Upload error. Check your credentials.';
-        }
-      });
-    }
+    attachForm('form-enroll', 'Enrollment submitted!');
+    attachForm('form-waitlist', 'Waitlist joined!');
+    attachForm('form-middle', 'Middle School enrollment submitted!');
   </script>
-
-  <!-- Serverless endpoint code (place in your functions directory; included here for reference) -->
-  <script type="text/plain" id="serverless-create-checkout-session.js">
-// functions/create-checkout-session.js
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
-exports.handler = async (event) => {
-  try {
-    const { priceId, itemId, mode, success_url, cancel_url } = JSON.parse(event.body || '{}');
-
-    const session = await stripe.checkout.sessions.create({
-      mode: mode || 'payment',
-      line_items: [{ price: priceId, quantity: 1 }],
-      success_url,
-      cancel_url,
-      allow_promotion_codes: true,
-      customer_creation: 'always',
-      metadata: { itemId },
-    });
-
-    return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sessionId: session.id }) };
-  } catch (err) {
-    console.error(err);
-    return { statusCode: 500, body: JSON.stringify({ error: 'Unable to create session' }) };
-  }
-};
-  </script>
-
-  <script type="text/plain" id="serverless-verify-access.js">
-// functions/verify-access.js
-// Demo-only: replace with a real database & Stripe webhooks.
-
-let memory = {
-  entitlementsByEmail: {
-    // 'user@example.com': ['membership', 'foundations']
-  },
-  videosByCourse: {
-    foundations: [],
-    digitalincome: [],
-    investing101: [],
-  },
-  downloadsByCourse: {
-    foundations: [{ name: 'Budget Template.xlsx', url: 'https://example.com/budget-template.xlsx' }],
-    digitalincome: [{ name: 'Launch Checklist.pdf', url: 'https://example.com/launch-checklist.pdf' }],
-    investing101: [{ name: 'Risk Planner.xlsx', url: 'https://example.com/risk-planner.xlsx' }],
-  }
-};
-
-exports.handler = async (event) => {
-  try {
-    const body = JSON.parse(event.body || '{}');
-
-    // Admin save new video
-    if (body.adminSave && body.course && body.video){
-      memory.videosByCourse[body.course] = memory.videosByCourse[body.course] || [];
-      memory.videosByCourse[body.course].push(body.video);
-      return ok({ saved: true });
-    }
-
-    const email = body.email || '';
-    const entitlements = memory.entitlementsByEmail[email] || [];
-
-    const videos = entitlements.flatMap(course => (memory.videosByCourse[course] || []));
-    const downloads = entitlements.flatMap(course => (memory.downloadsByCourse[course] || []));
-
-    return ok({ entitlements, videos, downloads });
-  } catch (err){
-    console.error(err);
-    return { statusCode: 500, body: JSON.stringify({ error: 'verify-access error' }) };
-  }
-};
-
-function ok(payload){
-  return { statusCode: 200, headers: { 'Content-Type':'application/json' }, body: JSON.stringify(payload) };
-}
-  </script>
-
-  <script type="text/plain" id="serverless-cloudinary-signature.js">
-// functions/cloudinary-signature.js
-const crypto = require('crypto');
-
-exports.handler = async () => {
-  const timestamp = Math.floor(Date.now()/1000);
-  const folder = 'wealth-options-university/videos';
-  const apiKey = process.env.CLOUDINARY_API_KEY;
-  const apiSecret = process.env.CLOUDINARY_API_SECRET;
-  const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
-
-  const toSign = `folder=${folder}&timestamp=${timestamp}`;
-  const signature = crypto.createHash('sha1').update(toSign + apiSecret).digest('hex');
-
-  return {
-    statusCode: 200,
-    headers: { 'Content-Type':'application/json' },
-    body: JSON.stringify({ timestamp, signature, cloudName, apiKey, folder })
-  };
-};
-  </script>
-
-  <!-- Quick deployment notes
-    - Replace pk_test_REPLACE_WITH_YOUR_PUBLISHABLE_KEY with your Stripe publishable key.
-    - Create Stripe Prices and set the data-price attributes accordingly (e.g., price_123).
-    - Add STRIPE_SECRET_KEY to your serverless environment.
-    - Implement Stripe webhooks (checkout.session.completed, invoice.payment_succeeded) to persist entitlements by customer email in your DB, and update verify-access.js to read real data.
-    - Add CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, CLOUDINARY_CLOUD_NAME to enable admin uploads.
-    - For production security: protect /admin with server-side auth & roles; never rely on localStorage alone.
-  -->
 </body>
 </html>
