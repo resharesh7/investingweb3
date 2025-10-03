@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quotex-style Demo Trading Widget</title>
+  <style>
+    :root{
+      --bg:#0f1724;
+      --panel:#0b1220;
+      --accent:#06b6d4;
+      --muted:#94a3b8;
+      --card:#0b1320;
+      --success:#16a34a;
+      --danger:#ef4444;
+      --glass: rgba(255,255,255,0.03);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      background:linear-gradient(180deg,#071025 0%, #071827 60%);
+      color:#e6eef7;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .widget{
+      width:1080px;
+      max-width:100%;
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:18px;
+      align-items:start;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:12px;
+      padding:16px;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.6), inset 0 1px rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    /* Left: Chart + controls */
+    .chart-area{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      height:560px;
+    }
+    .header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+    }
+    .symbol{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .logo {
+      width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#7c3aed);
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:#042028;
+      box-shadow:0 3px 10px rgba(7,22,28,0.6);
+    }
+    .symtext{line-height:1}
+    .symtext .name{font-weight:700}
+    .symtext .sub{color:var(--muted);font-size:13px}
+
+    .price-badge{
+      background:var(--glass);padding:8px 12px;border-radius:10px;font-weight:700;
+      display:flex;flex-direction:column;align-items:flex-end;min-width:140px;
+    }
+    .price{font-size:20px;letter-spacing:0.3px}
+    .change{font-size:12px;color:var(--muted)}
+
+    canvas#priceChart{
+      width:100%;
+      height:360px;
+      border-radius:8px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.0));
+      box-shadow: inset 0 1px rgba(255,255,255,0.02);
+    }
+
+    .controls{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .bets{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .input, .select{
+      background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:8px;color:inherit;
+      min-width:110px;
+    }
+    .btn{
+      background:linear-gradient(180deg,var(--accent),#60a5fa);
+      border:none;padding:10px 14px;border-radius:10px;color:#022;cursor:pointer;font-weight:700;
+      box-shadow:0 6px 18px rgba(6,8,10,0.35);
+    }
+    .btn:active{transform:translateY(1px)}
+    .trade-buttons{display:flex;gap:10px}
+    .call{background:linear-gradient(180deg,#10b981,#059669);color:#032;}
+    .put{background:linear-gradient(180deg,#ef4444,#b91c1c);color:#fff}
+
+    /* Right column: Account and Trades */
+    .sidebar{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .balance{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+    }
+    .big-balance{font-size:22px;font-weight:800}
+    .small{color:var(--muted);font-size:13px}
+
+    .trades-list{
+      max-height:320px;overflow:auto;padding-top:8px;display:flex;flex-direction:column;gap:8px;
+    }
+    .trade-item{
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+      border-radius:10px;padding:10px;border:1px solid rgba(255,255,255,0.02);
+      display:flex;justify-content:space-between;align-items:center;gap:8px;
+    }
+    .trade-item .left{display:flex;flex-direction:column}
+    .trade-item .tag{font-weight:700;font-size:13px;padding:6px 10px;border-radius:8px}
+    .tag-call{background:rgba(16,185,129,0.12);color:var(--success)}
+    .tag-put{background:rgba(239,68,68,0.09);color:var(--danger)}
+
+    .history{
+      max-height:200px;overflow:auto;padding-top:8px;display:flex;flex-direction:column;gap:8px;
+    }
+
+    footer.note{margin-top:10px;color:var(--muted);font-size:13px;text-align:center}
+
+    @media (max-width:980px){
+      .widget{grid-template-columns:1fr; padding:8px;}
+      .chart-area{height:auto}
+      canvas#priceChart{height:280px}
+      .sidebar{order:2}
+    }
+  </style>
+</head>
+<body>
+  <div class="widget" role="application" aria-label="Demo trading widget">
+    <div class="card chart-area" aria-hidden="false">
+      <div class="header">
+        <div class="symbol">
+          <div class="logo">Q</div>
+          <div class="symtext">
+            <div class="name">QUOTEX DEMO</div>
+            <div class="sub">Simulated demo feed — educational only</div>
+          </div>
+        </div>
+
+        <div class="price-badge" aria-live="polite">
+          <div class="price" id="currentPrice">--</div>
+          <div class="change" id="priceChange">--</div>
+        </div>
+      </div>
+
+      <canvas id="priceChart" width="800" height="360" role="img" aria-label="Price chart"></canvas>
+
+      <div class="controls">
+        <div class="bets">
+          <label class="small" for="betAmount">Bet</label>
+          <input id="betAmount" class="input" type="number" min="1" step="1" value="10" />
+
+          <label class="small" for="expiry">Expiry (s)</label>
+          <select id="expiry" class="select" aria-label="Expiry time (seconds)">
+            <option value="5">5s</option>
+            <option value="10" selected>10s</option>
+            <option value="20">20s</option>
+            <option value="30">30s</option>
+            <option value="60">60s</option>
+          </select>
+
+          <label class="small" for="payout">Payout</label>
+          <input id="payout" class="input" type="text" value="80%" readonly />
+        </div>
+
+        <div class="trade-buttons">
+          <button class="btn call" id="btnCall">CALL ▲</button>
+          <button class="btn put" id="btnPut">PUT ▼</button>
+        </div>
+      </div>
+
+      <div style="margin-top:10px;display:flex;gap:12px;align-items:center;justify-content:space-between">
+        <div class="small">Active trades: <span id="activeCount">0</span></div>
+        <div class="small">Server latency simulated: <span id="latency">--</span>ms</div>
+      </div>
+
+      <footer class="note">This demo simulates binary-style trades. It is for demonstration only.</footer>
+    </div>
+
+    <div class="card sidebar" aria-hidden="false">
+      <div class="balance">
+        <div>
+          <div class="small">Demo Balance</div>
+          <div class="big-balance" id="balance">$1,000.00</div>
+        </div>
+        <div style="text-align:right">
+          <div class="small">Payout</div>
+          <div style="font-weight:700">80%</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="small" style="margin-bottom:8px">Active Trades</div>
+        <div class="trades-list" id="tradesList" aria-live="polite"></div>
+      </div>
+
+      <div style="margin-top:6px">
+        <div class="small" style="margin-bottom:8px">Trade History</div>
+        <div class="history" id="historyList" aria-live="polite"></div>
+      </div>
+
+      <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+        <button id="resetBtn" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.04);color:inherit">Reset Balance</button>
+        <button id="seedBtn" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.04);color:inherit">Seed +$500</button>
+      </div>
+
+      <div style="margin-top:10px;color:var(--muted);font-size:13px">
+        <strong>Note:</strong> Demo logic deducts bet at placement. If trade wins you receive principal + profit.
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    // Config
+    const START_BALANCE = 1000.00;
+    const PAYOUT_RATE = 0.80; // 80% payout on win
+    const PRICE_POINTS = 200; // number of points in chart
+    const PRICE_BASE = 1.2345; // starting price
+    const UPDATE_MS = 600; // price tick interval (ms)
+
+    // State
+    let balance = START_BALANCE;
+    let priceSeries = [];
+    let lastPrice = PRICE_BASE;
+    let activeTrades = [];
+    let history = [];
+    let chartCanvas = document.getElementById('priceChart');
+    let ctx = chartCanvas.getContext('2d');
+    let dpr = window.devicePixelRatio || 1;
+    chartCanvas.width = chartCanvas.clientWidth * dpr;
+    chartCanvas.height = chartCanvas.clientHeight * dpr;
+    ctx.scale(dpr, dpr);
+
+    // UI refs
+    const currentPriceEl = document.getElementById('currentPrice');
+    const priceChangeEl = document.getElementById('priceChange');
+    const balanceEl = document.getElementById('balance');
+    const tradesListEl = document.getElementById('tradesList');
+    const historyListEl = document.getElementById('historyList');
+    const activeCountEl = document.getElementById('activeCount');
+    const latencyEl = document.getElementById('latency');
+
+    // Inputs / buttons
+    const betInput = document.getElementById('betAmount');
+    const expirySelect = document.getElementById('expiry');
+    const payoutInput = document.getElementById('payout');
+    document.getElementById('btnCall').addEventListener('click', ()=>placeTrade('CALL'));
+    document.getElementById('btnPut').addEventListener('click', ()=>placeTrade('PUT'));
+    document.getElementById('resetBtn').addEventListener('click', resetBalance);
+    document.getElementById('seedBtn').addEventListener('click', ()=>{ balance+=500; updateUI(); });
+
+    payoutInput.value = `${Math.round(PAYOUT_RATE*100)}%`;
+
+    // Simulate latency display
+    setInterval(()=>{ latencyEl.textContent = (50 + Math.floor(Math.random()*120)); }, 1500);
+
+    // Initialize price series
+    function initPrices(){
+      priceSeries = [];
+      lastPrice = PRICE_BASE;
+      for (let i=0;i<PRICE_POINTS;i++){
+        stepPrice();
+      }
+    }
+
+    function stepPrice(){
+      // Random walk with slight drift and occasional spikes
+      const rnd = (Math.random()-0.5) * 0.004; // small fluctuations
+      const spike = (Math.random() < 0.01) ? (Math.random()-0.5)*0.02 : 0;
+      lastPrice = +(lastPrice * (1 + rnd + spike)).toFixed(6);
+      if (lastPrice <= 0) lastPrice = PRICE_BASE;
+      priceSeries.push({ts:Date.now(), price:lastPrice});
+      if (priceSeries.length > PRICE_POINTS) priceSeries.shift();
+    }
+
+    // Chart drawing
+    function drawChart(){
+      const w = chartCanvas.clientWidth;
+      const h = chartCanvas.clientHeight;
+      ctx.clearRect(0,0,w,h);
+
+      // Background grid
+      ctx.save();
+      ctx.fillStyle = 'rgba(3,7,18,0.6)';
+      ctx.fillRect(0,0,w,h);
+      ctx.restore();
+
+      if (priceSeries.length < 2) return;
+
+      const prices = priceSeries.map(p => p.price);
+      const minP = Math.min(...prices);
+      const maxP = Math.max(...prices);
+      const pad = (maxP - minP) * 0.1 || minP*0.02;
+      const yToPixel = (val) => {
+        return ((maxP + pad) - val) / ((maxP + pad) - (minP - pad)) * (h - 20) + 10;
+      };
+      const step = w / (PRICE_POINTS - 1);
+
+      // Draw line
+      ctx.beginPath();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#60a5fa';
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      for (let i=0;i<prices.length;i++){
+        const x = i * step;
+        const y = yToPixel(prices[i]);
+        if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+
+      // Fill gradient under line
+      const grad = ctx.createLinearGradient(0,0,0,h);
+      grad.addColorStop(0, 'rgba(96,165,250,0.12)');
+      grad.addColorStop(1, 'rgba(96,165,250,0.02)');
+      ctx.lineTo(w, h);
+      ctx.lineTo(0, h);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Current price marker
+      const curX = (prices.length-1) * step;
+      const curY = yToPixel(prices[prices.length-1]);
+      ctx.beginPath();
+      ctx.fillStyle = '#06b6d4';
+      ctx.arc(curX, curY, 5, 0, Math.PI*2);
+      ctx.fill();
+
+      // Price labels (min/max/current)
+      ctx.fillStyle = 'rgba(230,238,247,0.9)';
+      ctx.font = '12px Inter, Arial';
+      ctx.fillText('Max: ' + maxP.toFixed(6), 8, 14);
+      ctx.fillText('Min: ' + minP.toFixed(6), 8, h - 6);
+      ctx.fillText('Cur: ' + prices[prices.length-1].toFixed(6), w - 110, 18);
+    }
+
+    // UI updates
+    function updateUI(){
+      currentPriceEl.textContent = lastPrice.toFixed(6);
+      // price change relative to first in series
+      if (priceSeries.length>1){
+        const first = priceSeries[0].price;
+        const change = ((lastPrice - first)/first)*100;
+        priceChangeEl.textContent = (change>=0?'+':'') + change.toFixed(2) + '%';
+        priceChangeEl.style.color = (change>=0)?'#34d399':'#fb7185';
+      } else {
+        priceChangeEl.textContent = '--';
+      }
+
+      balanceEl.textContent = formatCurrency(balance);
+      activeCountEl.textContent = activeTrades.length;
+      renderTrades();
+      renderHistory();
+    }
+
+    function formatCurrency(n){
+      return '$' + Number(n).toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+    }
+
+    // Trade logic
+    function placeTrade(direction){
+      const bet = Math.max(1, parseFloat(betInput.value) || 1);
+      const expirySec = parseInt(expirySelect.value,10);
+      if (bet > balance){
+        alert('Insufficient demo balance');
+        return;
+      }
+
+      // Deduct bet immediately
+      balance -= bet;
+      updateUI();
+
+      const entryPrice = lastPrice;
+      const createdAt = Date.now();
+      const expiryAt = createdAt + expirySec*1000;
+
+      const trade = {
+        id: 'T'+Math.floor(Math.random()*1e9),
+        direction, bet, entryPrice, createdAt, expiryAt, status:'OPEN'
+      };
+      activeTrades.push(trade);
+      updateUI();
+
+      // Set timeout for resolution
+      setTimeout(()=>resolveTrade(trade.id), expirySec*1000 + (50 + Math.floor(Math.random()*200))); // simulate tiny network lag
+    }
+
+    function resolveTrade(tradeId){
+      // Find trade
+      const idx = activeTrades.findIndex(t=>t.id===tradeId);
+      if (idx === -1) return;
+      const trade = activeTrades[idx];
+
+      // final price = current lastPrice (priceSeries latest)
+      const finalPrice = lastPrice;
+      const win = (trade.direction === 'CALL' && finalPrice > trade.entryPrice)
+               || (trade.direction === 'PUT' && finalPrice < trade.entryPrice);
+
+      // If exact equal, treat as draw => refund principal
+      let result = {win:false, draw:false, profit:0};
+      if (finalPrice === trade.entryPrice){
+        result.draw = true;
+        balance += trade.bet; // refund
+      } else if (win){
+        result.win = true;
+        const profit = trade.bet * PAYOUT_RATE;
+        balance += trade.bet + profit;
+        result.profit = profit;
+      } else {
+        // lose: bet already deducted, nothing to add
+        result.win = false;
+      }
+
+      trade.status = result.draw ? 'DRAW' : (result.win ? 'WIN' : 'LOSE');
+      trade.exitPrice = finalPrice;
+      trade.resolvedAt = Date.now();
+      trade.result = result;
+
+      // move to history
+      history.unshift(trade);
+      if (history.length > 200) history.pop();
+
+      // remove from active
+      activeTrades.splice(idx,1);
+      updateUI();
+    }
+
+    // Render active trades
+    function renderTrades(){
+      tradesListEl.innerHTML = '';
+      if (activeTrades.length===0){
+        tradesListEl.innerHTML = '<div class="small" style="color:var(--muted)">No active trades</div>';
+        return;
+      }
+      activeTrades.slice().reverse().forEach(t=>{
+        const div = document.createElement('div');
+        div.className = 'trade-item';
+        div.innerHTML = `
+          <div class="left">
+            <div style="display:flex;gap:8px;align-items:center">
+              <div class="tag ${t.direction==='CALL'?'tag-call':'tag-put'}">${t.direction}</div>
+              <div style="font-weight:700">${formatCurrency(t.bet)}</div>
+            </div>
+            <div class="small" style="margin-top:6px;color:var(--muted)">Entry ${t.entryPrice.toFixed(6)} • Expires ${(new Date(t.expiryAt)).toLocaleTimeString()}</div>
+          </div>
+          <div style="text-align:right">
+            <div class="small">Status</div>
+            <div style="font-weight:700;color:#60a5fa">OPEN</div>
+          </div>
+        `;
+        tradesListEl.appendChild(div);
+      });
+    }
+
+    function renderHistory(){
+      historyListEl.innerHTML = '';
+      if (history.length===0){
+        historyListEl.innerHTML = '<div class="small" style="color:var(--muted)">No trades yet</div>';
+        return;
+      }
+      history.slice(0,40).forEach(t=>{
+        const el = document.createElement('div');
+        el.className = 'trade-item';
+        let statusColor = t.status==='WIN' ? 'color:var(--success)' : (t.status==='DRAW' ? 'color:var(--muted)' : 'color:var(--danger)');
+        el.innerHTML = `
+          <div class="left">
+            <div style="display:flex;gap:8px;align-items:center">
+              <div class="tag ${t.direction==='CALL'?'tag-call':'tag-put'}">${t.direction}</div>
+              <div style="font-weight:700">${formatCurrency(t.bet)}</div>
+            </div>
+            <div class="small" style="margin-top:6px;color:var(--muted)">
+              ${new Date(t.resolvedAt).toLocaleString()} • Entry ${t.entryPrice.toFixed(6)} • Exit ${t.exitPrice.toFixed(6)}
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-weight:700; ${statusColor}">${t.status}</div>
+            <div class="small">${t.result.draw ? 'Refund' : (t.result.win ? '+'+formatCurrency(t.result.profit) : '-'+formatCurrency(t.bet))}</div>
+          </div>
+        `;
+        historyListEl.appendChild(el);
+      });
+    }
+
+    function resetBalance(){
+      if (!confirm('Reset demo balance to $' + START_BALANCE + '?')) return;
+      balance = START_BALANCE;
+      activeTrades = [];
+      history = [];
+      initPrices();
+      updateUI();
+    }
+
+    // Periodic price updates
+    initPrices();
+    updateUI();
+    drawChart();
+
+    setInterval(()=>{
+      stepPrice();
+      updateUI();
+      drawChart();
+    }, UPDATE_MS);
+
+    // Accessibility: keyboard shortcuts
+    window.addEventListener('keydown', (e)=>{
+      if (e.key === 'ArrowUp') document.getElementById('btnCall').classList.add('focused');
+      if (e.key === 'ArrowDown') document.getElementById('btnPut').classList.add('focused');
+      if (e.key === 'c') placeTrade('CALL');
+      if (e.key === 'p') placeTrade('PUT');
+    });
+    window.addEventListener('keyup', (e)=>{
+      if (e.key === 'ArrowUp') document.getElementById('btnCall').classList.remove('focused');
+      if (e.key === 'ArrowDown') document.getElementById('btnPut').classList.remove('focused');
+    });
+
+    // Make sure chart resizes on window resize
+    window.addEventListener('resize', ()=>{
+      chartCanvas.width = chartCanvas.clientWidth * dpr;
+      chartCanvas.height = chartCanvas.clientHeight * dpr;
+      ctx.scale(dpr, dpr);
+      drawChart();
+    });
+
+    // initial small animation: seed a few ticks quickly
+    (function quickSeed(){
+      for (let i=0;i<8;i++){
+        stepPrice();
+      }
+      drawChart();
+      updateUI();
+    })();
+
+  })();
+  </script>
+</body>
+</html>
