@@ -1,159 +1,529 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
+  <title>Wealth Options University | Prosper with clarity</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Wealth Options University | Membership, eCourses, Coaching</title>
-  <meta name="description" content="Wealth Options University by Mrs. Tiphany Richardson—monthly membership, eCourses, live coaching, and downloadable lessons." />
-  <link rel="canonical" href="https://www.wealthoptionsuniversity.com/" />
-  <script defer src="https://js.stripe.com/v3/"></script>
+  <meta name="description" content="Wealth Options University offers memberships, eCourses, and 1-on-1 coaching to grow your financial confidence." />
+  <meta name="theme-color" content="#1e6fd9" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#f9fafc;
-      --card:#ffffff;
-      --text:#1a1a1a;
-      --muted:#555;
-      --primary:#28c76f;
-      --accent:#ffd166;
-      --shadow:0 8px 28px rgba(0,0,0,0.10);
-      --maxw:1200px;
+    :root {
+      --blue-600: #1e6fd9;
+      --blue-700: #1557ad;
+      --green-500: #21c087;
+      --gold-500: #e2b13c;
+      --gold-600: #c89a2e;
+      --bg: #f7fbff;
+      --text: #1a2a34;
+      --muted: #5b7488;
+      --white: #ffffff;
+      --shadow: 0 8px 24px rgba(26,42,52,0.1);
     }
-    body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}
-    .container{max-width:var(--maxw);margin:0 auto;padding:0 18px}
-    header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:#fff;box-shadow:var(--shadow);position:sticky;top:0;z-index:100}
-    header img.logo{height:50px}
-    nav a{margin:0 8px;text-decoration:none;color:var(--text)}
-    .btn-primary{background:var(--primary);color:#fff;padding:10px 16px;border-radius:8px;border:none;cursor:pointer}
-    .btn-ghost{border:1px solid #ccc;padding:10px 16px;border-radius:8px;background:#fff;color:var(--text);cursor:pointer}
-    .hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:20px;padding:60px 18px;background:linear-gradient(135deg,#fffbe6,#f0fff7)}
-    .hero img{max-width:100%;border-radius:12px;box-shadow:var(--shadow)}
-    .features{padding:40px 18px;background:#fff}
-    .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-    .card{background:var(--card);padding:20px;border-radius:12px;box-shadow:var(--shadow);text-align:center}
-    .card img{height:80px;margin-bottom:12px}
-    footer{padding:20px;background:#fff;text-align:center;color:var(--muted);margin-top:40px}
-    @media(max-width:768px){.hero{grid-template-columns:1fr}}
+    * { box-sizing: border-box }
+    html, body { margin: 0; padding: 0; font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial; color: var(--text); background: var(--bg); }
+    a { color: var(--blue-700); text-decoration: none }
+    header { position: sticky; top: 0; z-index: 100; background: var(--white); box-shadow: var(--shadow); }
+    .nav { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; }
+    .brand { display: flex; align-items: center; gap: .5rem; font-weight: 800; color: var(--blue-700); }
+    .brand .dot { width: 10px; height: 10px; background: linear-gradient(135deg, var(--blue-600), var(--green-500)); border-radius: 50%; box-shadow: 0 0 0 3px rgba(33,192,135,.15) }
+    nav a { text-decoration: none; color: var(--text); margin: 0 .25rem; padding: .5rem .6rem; border-radius: 8px; }
+    nav a:hover { background: rgba(30,111,217,.08) }
+    .cta { background: linear-gradient(135deg, var(--gold-500), var(--gold-600)); color: var(--white); padding: .5rem .9rem; border-radius: 10px; box-shadow: var(--shadow); }
+    .cta:hover { filter: brightness(1.05) }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 1rem }
+    .hero { margin: 1rem auto; padding: 2rem 1rem; display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+    .hero-card { background: var(--white); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); position: relative; overflow: hidden; }
+    .hero-card::after { content: ""; position: absolute; inset: -50% -50% auto auto; width: 200%; height: 200%; background: radial-gradient(600px 300px at 80% -10%, rgba(226,177,60,.25), transparent 60%); pointer-events: none; }
+    h1, h2 { margin: 0 0 .5rem }
+    p { color: var(--muted); line-height: 1.6 }
+    .section { max-width: 1100px; margin: 2rem auto; padding: 0 1rem }
+    .grid { display: grid; gap: 1rem }
+    .cards { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+    .card { background: var(--white); border-radius: 14px; padding: 1rem; box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(26,42,52,.12); }
+    .badge { display: inline-block; padding: .25rem .6rem; border-radius: 999px; background: rgba(33,192,135,.12); color: var(--green-500); font-weight: 600; font-size: .85rem }
+    .btn { display: inline-flex; align-items: center; gap: .5rem; border: none; cursor: pointer; border-radius: 10px; padding: .6rem .9rem; background: var(--blue-600); color: var(--white); box-shadow: var(--shadow); }
+    .btn.secondary { background: var(--green-500) }
+    .btn.gold { background: var(--gold-500) }
+    .btn.link { background: transparent; color: var(--blue-700); box-shadow: none; padding: .25rem 0 }
+    .btn:disabled { opacity: .6; cursor: not-allowed }
+    .input, select, textarea { width: 100%; padding: .7rem .8rem; border-radius: 10px; border: 1px solid #cbd6df; background: var(--white) }
+    label { font-weight: 600; color: var(--text); margin-bottom: .25rem; display: block }
+    .split { display: grid; grid-template-columns: 1fr; gap: 1rem }
+    @media (min-width: 800px) { .hero { grid-template-columns: 1.2fr .8fr } .split { grid-template-columns: 1fr 1fr } }
+    .reveal { opacity: 0; transform: translateY(10px); transition: opacity .5s ease, transform .5s ease }
+    .reveal.visible { opacity: 1; transform: translateY(0) }
+    .footer { background: var(--white); margin-top: 3rem; box-shadow: var(--shadow) inset; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; padding: 1rem; display: grid; gap: .75rem; grid-template-columns: 1fr; color: var(--muted); }
+    /* Chat */
+    .chat-bubble { position: fixed; right: 16px; bottom: 16px; background: var(--blue-600); color: var(--white); border-radius: 999px; padding: .6rem .9rem; box-shadow: var(--shadow); cursor: pointer; z-index: 999 }
+    .chat-panel { position: fixed; right: 16px; bottom: 70px; width: 320px; max-height: 60vh; background: var(--white); border-radius: 16px; box-shadow: var(--shadow); display: none; overflow: hidden }
+    .chat-panel header { background: var(--blue-700); color: var(--white); padding: .6rem .8rem; font-weight: 700 }
+    .chat-messages { padding: .6rem; height: 240px; overflow-y: auto; font-size: .95rem }
+    .chat-input { display: flex; gap: .5rem; padding: .6rem; border-top: 1px solid #e2e8f0 }
+    .chat-input input { flex: 1 }
+    /* Routing sections */
+    section[hidden] { display: none !important }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"Wealth Options University",
+    "url":"https://wealthoptionsuniversity.demo",
+    "logo":"https://wealthoptionsuniversity.demo/logo.png",
+    "founder":"Mrs. Tiphany Richardson",
+    "sameAs": ["https://www.instagram.com", "https://www.youtube.com"]
+  }
+  </script>
 </head>
 <body>
   <header>
-   <img src="https://i.postimg.cc/XJnwpMtN/Wealth-Options-University.png" alt="Logo" style="width: 15%; height: auto;">
-
-    <nav>
-      <a href="#courses">eCourses</a>
-      <a href="#membership">Membership</a>
-      <a href="#dashboard">Dashboard</a>
-      <a href="#live">Go Live</a>
-      <a href="#booking">1-on-1</a>
-      <a href="#admin">Admin</a>
-      <a href="quotex-demo.html">Try Demo Trading</a>
-
-    </nav>
+    <div class="nav">
+      <div class="brand"><span class="dot"></span> <img src="https://i.postimg.cc/XJnwpMtN/Wealth-Options-University.png" alt="Logo" style="width: 15%; height: auto;"> Wealth Options University</div>
+      <nav id="nav">
+        <a href="#home">Home</a>
+        <a href="#courses">eCourses</a>
+        <a href="#membership">Membership</a>
+        <a href="#live">Go live</a>
+        <a href="#booking">1-on-1</a>
+        <a href="quotex-demo.html">Try Demo Trading</a>
+        <a id="nav-admin-link" href="#admin" style="display:none">Admin</a>
+        <span id="nav-auth"></span>
+      </nav>
+    </div>
   </header>
 
   <!-- Home -->
-  <section class="hero container" id="home">
-    <div>
-      <h1>Build Wealth with Guidance You Can Trust</h1>
-      <p>Curated eCourses and private coaching by <strong>Mrs. Tiphany Richardson</strong>. Join the community or purchase courses à la carte.</p>
-      <button class="btn-primary">Join Membership</button>
+  <section id="home" class="wrap">
+    <div class="hero">
+      <div class="hero-card reveal">
+        <h1>Prosperity, clarity, and confidence</h1>
+        <p>Guided by <strong>Mrs. Tiphany Richardson</strong>, learn practical wealth strategies with curated courses, live sessions, and a supportive community.</p>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.75rem">
+          <a class="btn gold" href="#membership">Join the Membership</a>
+          <a class="btn" href="#courses">Browse eCourses</a>
+          <a class="btn secondary" href="#library" id="nav-library" style="display:none">Your Library</a>
+        </div>
+      </div>
+      <div class="hero-card reveal">
+        <h2>What you’ll unlock</h2>
+        <div class="grid cards">
+          <div class="card"><span class="badge">Members</span><h3>Monthly insights</h3><p>Fresh lessons, templates, and Q&A each month.</p></div>
+          <div class="card"><span class="badge">eCourses</span><h3>Step-by-step videos</h3><p>Screen-recorded walkthroughs with downloadable resources.</p></div>
+          <div class="card"><span class="badge">Coaching</span><h3>1-on-1 booking</h3><p>Book a private session to apply what you learn.</p></div>
+          <div class="card"><span class="badge">Live</span><h3>Go live + chat</h3><p>Engage in real time with our community.</p></div>
+        </div>
+      </div>
     </div>
-    <div>
-      <!-- Hero image: finance graph -->
-      <img src="https://img.freepik.com/free-vector/financial-growth-graph_53876-90406.jpg" alt="Financial Growth Graph">
-    </div>
-  </section>
-
-  <!-- Features -->
-  <section class="features container" id="features">
-    <h2 style="text-align:center">Why Wealth Options University</h2>
-    <div class="grid-3">
-      <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/2331/2331943.png" alt="Curriculum Icon">
-        <h3>Premium Curriculum</h3>
-        <p>Step-by-step lessons, screen recordings, and templates you can download.</p>
-      </div>
-      <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Live Support Icon">
-        <h3>Live Support</h3>
-        <p>Go live with the community and book 1-on-1 sessions after your purchase.</p>
-      </div>
-      <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/2331/2331970.png" alt="Flexible Access Icon">
-        <h3>Flexible Access</h3>
-        <p>Monthly membership or single course—choose the path that fits your goals.</p>
-      </div>
+    <div class="section reveal">
+      <h2>Trusted guidance</h2>
+      <p>Wealth Options University is crafted for clarity—not clutter—so you can move forward with focus.</p>
     </div>
   </section>
 
-  <!-- Courses -->
-  <section class="features container" id="courses">
-    <h2 style="text-align:center">Popular eCourses</h2>
-    <div class="grid-3">
-      <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135673.png" alt="Foundations Icon">
-        <h3>Wealth Foundations</h3>
-        <p>Mindset, budgeting, and compounding strategies.</p>
-        <button class="btn-primary">Buy Course</button>
+  <!-- eCourses -->
+  <section id="courses" class="section" hidden>
+    <h1>eCourses</h1>
+    <p class="reveal">Focused, screen-recorded walkthroughs with downloads. Purchase individual courses or join the membership for full access.</p>
+    <div class="grid cards">
+      <div class="card reveal">
+        <h3>Foundations of Financial Confidence</h3>
+        <p>Practical steps, worksheets, and guided videos.</p>
+        <button class="btn" onclick="purchase('course_foundations')">Buy course</button>
       </div>
-      <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/2331/2331958.png" alt="Digital Income Icon">
-        <h3>Digital Income Playbook</h3>
-        <p>Launch your first digital product with templates.</p>
-        <button class="btn-primary">Buy Course</button>
+      <div class="card reveal">
+        <h3>Budgeting with Purpose</h3>
+        <p>Make your budget reflect your goals.</p>
+        <button class="btn" onclick="purchase('course_budget')">Buy course</button>
       </div>
-      <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/2331/2331930.png" alt="Investing Icon">
-        <h3>Investing 101</h3>
-        <p>Intro to stocks, ETFs, and risk management.</p>
-        <button class="btn-primary">Buy Course</button>
+      <div class="card reveal">
+        <h3>Level Up: Wealth Options Toolkit</h3>
+        <p>Systems and templates for momentum.</p>
+        <button class="btn" onclick="purchase('course_toolkit')">Buy course</button>
       </div>
     </div>
   </section>
 
   <!-- Membership -->
-  <section class="features container" id="membership">
-    <h2 style="text-align:center">Membership</h2>
-    <div class="card">
-      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135714.png" alt="Membership Icon">
-      <h3>$49 / month</h3>
-      <p>Exclusive live sessions, member-only downloads, and priority booking.</p>
-      <button class="btn-primary">Subscribe</button>
+  <section id="membership" class="section" hidden>
+    <h1>Membership</h1>
+    <div class="split">
+      <div class="card reveal">
+        <h2>What’s included</h2>
+        <ul>
+          <li><strong>Library access:</strong> All member eCourses and downloads</li>
+          <li><strong>Monthly drops:</strong> New videos, templates, and notes</li>
+          <li><strong>Live sessions:</strong> Community Q&A and coaching prompts</li>
+          <li><strong>1-on-1:</strong> Members-only booking access</li>
+        </ul>
+        <button class="btn gold" onclick="purchase('membership_monthly', 'membership')">Subscribe monthly</button>
+      </div>
+      <div class="card reveal">
+        <h2>Led by Mrs. Tiphany Richardson</h2>
+        <p>Join a supportive space built for clarity and progress—no overwhelm.</p>
+        <img alt="Prosperity color motif" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='300'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%231e6fd9'/><stop offset='50%' stop-color='%2321c087'/><stop offset='100%' stop-color='%23e2b13c'/></linearGradient></defs><rect width='600' height='300' rx='24' fill='url(%23g)'/></svg>" style="width:100%;border-radius:12px" />
+      </div>
     </div>
   </section>
 
-  <!-- Dashboard -->
-  <section class="features container" id="dashboard">
-    <h2 style="text-align:center">Dashboard</h2>
-    <p>Sign in to access your purchased courses, downloads, and book 1-on-1 sessions.</p>
-    <div class="card">
-      <h3>Member Sign In</h3>
-      <input type="email" placeholder="Email"><br><br>
-      <input type="password" placeholder="Password"><br><br>
-      <button class="btn-primary">Sign In</button>
+  <!-- Library (videos) -->
+  <section id="library" class="section" hidden>
+    <h1>Your library</h1>
+    <div id="video-grid" class="grid cards">
+      <div class="card"><p>Sign in and make a purchase to unlock videos.</p></div>
+    </div>
+  </section>
+
+  <!-- Live -->
+  <section id="live" class="section" hidden>
+    <h1>Live session</h1>
+    <div class="card reveal">
+      <p>Live stream demo. Drop in an embedded YouTube Live link below to go truly live.</p>
+      <div style="position:relative;padding-top:56.25%">
+        <iframe title="Live demo" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allow="autoplay; encrypted-media" allowfullscreen
+          style="position:absolute;left:0;top:0;width:100%;height:100%;border:0;border-radius:12px;"></iframe>
+      </div>
     </div>
   </section>
 
   <!-- Booking -->
-  <section class="features container" id="booking">
-    <h2 style="text-align:center">Book a 1-on-1 Session</h2>
-    <form class="card">
-      <input type="text" placeholder="Name" required><br><br>
-      <input type="email" placeholder="Email" required><br><br>
-      <input type="date" required><br><br>
-      <input type="time" required><br><br>
-      <textarea placeholder="Notes"></textarea><br><br>
-      <button class="btn-primary">Request Booking</button>
-    </form>
-  </section>
-
-  <!-- Live -->
-  <section class="features container" id="live">
-    <h2 style="text-align:center">Go Live</h2>
-    <div class="card">
-      <iframe width="100%" height="315" src="https://www.youtube.com/embed/live_stream?channel=YOUR_CHANNEL_ID" frameborder="0" allowfullscreen></iframe>
-      <p>Join our live sessions and chat with the community.</p>
+  <section id="booking" class="section" hidden>
+    <h1>Book a 1-on-1 session</h1>
+    <div class="card reveal">
+      <form onsubmit="submitBooking(event)">
+        <label for="date">Preferred date & time</label>
+        <input class="input" id="date" name="date" type="datetime-local" required />
+        <label for="notes">Notes</label>
+        <textarea class="input" id="notes" name="notes" rows="4" placeholder="What would you like to focus on?"></textarea>
+        <button class="btn gold" type="submit">Request booking</button>
+      </form>
+      <p style="margin-top:.75rem;color:#5b7488">Members and purchasers get booking access.</p>
+    </div>
+    <div class="section">
+      <h2>Your requests</h2>
+      <div id="booking-list" class="grid cards"></div>
     </div>
   </section>
 
- 
+  <!-- Login/Register -->
+  <section id="login" class="section" hidden>
+    <div class="split">
+      <div class="card reveal">
+        <h2>Sign in</h2>
+        <form onsubmit="handleAuth(event, 'login')">
+          <label>Email</label>
+          <input class="input" name="email" type="email" required />
+          <label>Password</label>
+          <input class="input" name="password" type="password" required />
+          <button class="btn" type="submit">Sign in</button>
+        </form>
+      </div>
+      <div class="card reveal">
+        <h2>Create account</h2>
+        <form onsubmit="handleAuth(event, 'register')">
+          <label>Name</label>
+          <input class="input" name="name" required />
+          <label>Email</label>
+          <input class="input" name="email" type="email" required />
+          <label>Password</label>
+          <input class="input" name="password" type="password" required />
+          <button class="btn secondary" type="submit">Register</button>
+        </form>
+      </div>
+    </div>
+    <p style="margin-top:1rem;color:#5b7488">Only after purchase will you unlock the full library and member insights.</p>
+  </section>
+
+  <!-- Admin -->
+  <section id="admin" class="section" hidden>
+    <h1>Admin panel</h1>
+    <div class="card reveal">
+      <p>Sign in as admin: <strong>admin@wou.com</strong> / <strong>AdminPass123!</strong></p>
+      <form id="upload-form" onsubmit="adminUpload(event)">
+        <label>Title</label>
+        <input class="input" name="title" required />
+        <label>Description</label>
+        <textarea class="input" name="description"></textarea>
+        <label>Course ID (optional)</label>
+        <input class="input" name="courseId" placeholder="general" />
+        <label>Video file</label>
+        <input class="input" name="video" type="file" accept="video/*" required />
+        <button class="btn gold" type="submit">Upload</button>
+      </form>
+    </div>
+    <div class="section">
+      <h2>Uploaded videos</h2>
+      <div id="admin-video-list" class="grid cards"><div class="card">No videos yet</div></div>
+    </div>
+    <div class="section">
+      <h2>Bookings</h2>
+      <div id="admin-bookings" class="grid cards"><div class="card">No bookings yet</div></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© <span id="year"></span> Wealth Options University. All rights reserved.</div>
+      <div>Led by Mrs. Tiphany Richardson • Liberty Triangle, FL</div>
+    </div>
+  </footer>
+
+  <!-- Chat -->
+  <div class="chat-bubble">Chat</div>
+  <div class="chat-panel">
+    <header>Live chat</header>
+    <div class="chat-messages"></div>
+    <div class="chat-input">
+      <input id="chat-input" placeholder="Type a message..." />
+      <button class="btn" id="chat-send">Send</button>
+    </div>
+  </div>
+
+  <script>
+    // Simple state
+    const State = {
+      get users() { return JSON.parse(localStorage.getItem('users') || '[]'); },
+      set users(v) { localStorage.setItem('users', JSON.stringify(v)); },
+      get currentUser() { return JSON.parse(localStorage.getItem('currentUser') || 'null'); },
+      set currentUser(u) { localStorage.setItem('currentUser', JSON.stringify(u)); },
+      get purchases() { return JSON.parse(localStorage.getItem('purchases') || '[]'); },
+      set purchases(v) { localStorage.setItem('purchases', JSON.stringify(v)); },
+      get videos() { return JSON.parse(localStorage.getItem('videos') || '[]'); },
+      set videos(v) { localStorage.setItem('videos', JSON.stringify(v)); },
+      get bookings() { return JSON.parse(localStorage.getItem('bookings') || '[]'); },
+      set bookings(v) { localStorage.setItem('bookings', JSON.stringify(v)); }
+    };
+
+    // Seed admin
+    (function seedAdmin(){
+      const exists = State.users.find(u => u.email === 'admin@wou.com');
+      if (!exists) {
+        State.users = [...State.users, { id: 'admin-1', name: 'Mrs. Tiphany Richardson', email: 'admin@wou.com', pass: 'AdminPass123!', role: 'admin' }];
+      }
+    })();
+
+    // Router
+    const routes = ['home','courses','membership','library','live','booking','login','admin'];
+    function routeTo(hash) {
+      const page = (hash || '#home').replace('#','');
+      routes.forEach(r => {
+        const sec = document.getElementById(r);
+        if (!sec) return;
+        sec.hidden = (r !== page);
+      });
+      updateNav();
+      if (page === 'library') renderLibrary();
+      if (page === 'booking') renderBookings();
+      if (page === 'admin') { renderAdminVideos(); renderAdminBookings(); }
+      reveal();
+    }
+    window.addEventListener('hashchange', () => routeTo(location.hash));
+    window.addEventListener('load', () => { document.getElementById('year').textContent = new Date().getFullYear(); routeTo(location.hash || '#home'); reveal(); });
+
+    // UI helpers
+    function reveal() {
+      document.querySelectorAll('.reveal').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 80) el.classList.add('visible');
+      });
+    }
+    function toast(msg) {
+      const t = document.createElement('div');
+      t.style.cssText = 'position:fixed;left:50%;top:20px;transform:translateX(-50%);background:#1e6fd9;color:#fff;padding:.6rem .9rem;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);z-index:1000';
+      t.textContent = msg; document.body.appendChild(t); setTimeout(()=> t.remove(), 3000);
+    }
+    function confetti() {
+      const c = document.createElement('canvas'); c.width=window.innerWidth; c.height=200; c.style.cssText='position:fixed;left:0;top:0;pointer-events:none;z-index:999';
+      document.body.appendChild(c); const ctx=c.getContext('2d');
+      for(let i=0;i<120;i++){ setTimeout(()=>{ ctx.fillStyle = ['#1e6fd9','#21c087','#e2b13c'][i%3]; ctx.fillRect(Math.random()*c.width, Math.random()*c.height, 6, 12); }, i*8); }
+      setTimeout(()=>c.remove(), 1200);
+    }
+
+    // Auth
+    function handleAuth(evt, mode) {
+      evt.preventDefault();
+      const form = evt.target.closest('form');
+      const payload = Object.fromEntries(new FormData(form).entries());
+      if (mode === 'register') {
+        if (State.users.find(u => u.email === payload.email)) return toast('Email already registered');
+        const user = { id: 'u_'+Date.now(), name: payload.name, email: payload.email, pass: payload.password, role: 'user' };
+        State.users = [...State.users, user];
+        State.currentUser = { id: user.id, name: user.name, email: user.email, role: user.role };
+        toast('Welcome!'); confetti(); location.hash = '#home';
+      } else {
+        const u = State.users.find(x => x.email === payload.email && x.pass === payload.password);
+        if (!u) return toast('Invalid credentials');
+        State.currentUser = { id: u.id, name: u.name, email: u.email, role: u.role };
+        toast('Signed in'); location.hash = '#home';
+      }
+      updateNav();
+    }
+    function logout() { State.currentUser = null; updateNav(); location.hash = '#home'; }
+
+    function updateNav() {
+      const navAuth = document.getElementById('nav-auth');
+      const adminLink = document.getElementById('nav-admin-link');
+      const libBtn = document.getElementById('nav-library');
+      const u = State.currentUser;
+      if (u) {
+        navAuth.innerHTML = `<a href="#library">Library</a> <a href="#booking">1-on-1</a> <a class="cta" href="#" id="logout">Logout</a>`;
+        adminLink.style.display = u.role === 'admin' ? 'inline' : 'none';
+        libBtn.style.display = 'inline';
+        document.getElementById('logout')?.addEventListener('click', (e)=>{ e.preventDefault(); logout(); });
+      } else {
+        navAuth.innerHTML = `<a href="#login">Sign in</a> <a class="cta" href="#membership">Join</a>`;
+        adminLink.style.display = 'none';
+        if (libBtn) libBtn.style.display = 'none';
+      }
+    }
+
+    // Purchases (demo entitlement)
+    function purchase(itemId, type='course') {
+      const u = State.currentUser;
+      if (!u) { toast('Please sign in first'); location.hash = '#login'; return; }
+      const entitlement = { id: 'p_'+Date.now(), userId: u.id, itemId, type, createdAt: new Date().toISOString() };
+      State.purchases = [...State.purchases, entitlement];
+      toast('Purchase complete! Access unlocked'); confetti();
+      location.hash = '#library';
+    }
+    function userEntitled() {
+      const u = State.currentUser; if (!u) return false;
+      return State.purchases.some(p => p.userId === u.id);
+    }
+
+    // Videos: admin upload (stored as data URLs)
+    async function adminUpload(evt) {
+      evt.preventDefault();
+      const u = State.currentUser;
+      if (!u || u.role !== 'admin') return toast('Admin only');
+      const form = document.getElementById('upload-form');
+      const fd = new FormData(form);
+      const file = fd.get('video');
+      const title = fd.get('title');
+      const description = fd.get('description');
+      const courseId = fd.get('courseId') || 'general';
+      const reader = new FileReader();
+      reader.onload = () => {
+        const video = { id: 'v_'+Date.now(), title, description, courseId, dataUrl: reader.result, createdAt: new Date().toISOString() };
+        State.videos = [video, ...State.videos];
+        toast('Uploaded'); confetti(); form.reset();
+        renderAdminVideos();
+      };
+      reader.readAsDataURL(file);
+    }
+    function renderAdminVideos() {
+      const u = State.currentUser;
+      const list = document.getElementById('admin-video-list');
+      if (!list) return;
+      list.innerHTML = '';
+      if (!u || u.role !== 'admin') { list.innerHTML = '<div class="card">Sign in as admin to view uploads.</div>'; return; }
+      if (State.videos.length === 0) { list.innerHTML = '<div class="card">No videos yet</div>'; return; }
+      State.videos.forEach(v => {
+        const row = document.createElement('div');
+        row.className = 'card';
+        row.innerHTML = `<strong>${v.title}</strong><p>${v.description || ''}</p><small>Uploaded: ${new Date(v.createdAt).toLocaleString()}</small>`;
+        list.appendChild(row);
+      });
+    }
+
+    // Library render (gated)
+    function renderLibrary() {
+      const grid = document.getElementById('video-grid');
+      const u = State.currentUser;
+      grid.innerHTML = '';
+      if (!u) { grid.innerHTML = `<div class="card"><p>Sign in to view your library.</p><a class="btn" href="#login">Sign in</a></div>`; return; }
+      if (!userEntitled() && u.role !== 'admin') {
+        grid.innerHTML = `<div class="card"><p>You need a purchase to access the library.</p><div style="display:flex;gap:.5rem"><a class="btn" href="#membership">Join membership</a><a class="btn secondary" href="#courses">Buy a course</a></div></div>`;
+        return;
+      }
+      if (State.videos.length === 0) {
+        grid.innerHTML = `<div class="card"><p>No videos yet. Check back soon!</p></div>`;
+        return;
+      }
+      State.videos.forEach(v => {
+        const el = document.createElement('div');
+        el.className = 'card reveal';
+        el.innerHTML = `<h3>${v.title}</h3><p>${v.description || ''}</p>
+          <video controls style="width:100%;border-radius:12px;background:#000" src="${v.dataUrl}"></video>
+          <div style="display:flex;gap:.5rem;margin-top:.5rem">
+            <a class="btn secondary" href="${v.dataUrl}" download="${(v.title||'video').replace(/\s+/g,'_')}.mp4">Download</a>
+          </div>`;
+        grid.appendChild(el);
+      });
+      reveal();
+    }
+
+    // Booking (gated)
+    function submitBooking(evt) {
+      evt.preventDefault();
+      const u = State.currentUser;
+      if (!u) { toast('Sign in first'); location.hash = '#login'; return; }
+      if (!userEntitled() && u.role !== 'admin') { toast('Purchase required'); return; }
+      const form = evt.target.closest('form');
+      const payload = Object.fromEntries(new FormData(form).entries());
+      const booking = { id: 'b_'+Date.now(), userId: u.id, date: payload.date, notes: payload.notes || '', status: 'requested', createdAt: new Date().toISOString() };
+      State.bookings = [booking, ...State.bookings];
+      toast('Booking requested'); confetti(); form.reset();
+      renderBookings(); renderAdminBookings();
+    }
+    function renderBookings() {
+      const list = document.getElementById('booking-list');
+      if (!list) return;
+      const u = State.currentUser;
+      list.innerHTML = '';
+      if (!u) { list.innerHTML = '<div class="card">Sign in to view your bookings.</div>'; return; }
+      const mine = State.bookings.filter(b => b.userId === u.id);
+      if (mine.length === 0) { list.innerHTML = '<div class="card">No bookings yet</div>'; return; }
+      mine.forEach(b => {
+        const row = document.createElement('div');
+        row.className = 'card';
+        row.innerHTML = `<strong>${new Date(b.date).toLocaleString()}</strong><p>${b.notes || ''}</p><small>Status: ${b.status}</small>`;
+        list.appendChild(row);
+      });
+    }
+    function renderAdminBookings() {
+      const box = document.getElementById('admin-bookings');
+      if (!box) return;
+      const u = State.currentUser;
+      box.innerHTML = '';
+      if (!u || u.role !== 'admin') { box.innerHTML = '<div class="card">Admin only</div>'; return; }
+      if (State.bookings.length === 0) { box.innerHTML = '<div class="card">No bookings yet</div>'; return; }
+      State.bookings.forEach(b => {
+        const row = document.createElement('div');
+        row.className = 'card';
+        row.innerHTML = `<strong>${new Date(b.date).toLocaleString()}</strong><p>${b.notes || ''}</p><small>User: ${b.userId} • Status: ${b.status}</small>`;
+        box.appendChild(row);
+      });
+    }
+
+    // Chat
+    (function setupChat(){
+      const bubble = document.querySelector('.chat-bubble');
+      const panel = document.querySelector('.chat-panel');
+      const messages = document.querySelector('.chat-messages');
+      const input = document.getElementById('chat-input');
+      const send = document.getElementById('chat-send');
+
+      bubble.addEventListener('click', () => {
+        panel.style.display = (panel.style.display === 'none' || panel.style.display === '') ? 'block' : 'none';
+      });
+      send.addEventListener('click', () => {
+        const msg = input.value.trim();
+        if (!msg) return;
+        appendChat('You', msg);
+        input.value = '';
+        setTimeout(() => appendChat('Support', 'Thanks for reaching out! We’ll respond shortly.'), 600);
+      });
+      function appendChat(from, text) {
+        const line = document.createElement('div');
+        line.innerHTML = `<strong>${from}:</strong> ${text}`;
+        messages.appendChild(line);
+        messages.scrollTop = messages.scrollHeight;
+      }
+    })();
+  </script>
+</body>
+</html>
