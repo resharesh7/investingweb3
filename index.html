@@ -3,656 +3,157 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Creative Christian Learning Center</title>
-  <meta name="description" content="Creative Christian Learning Center — playful, professional learning for K–5 with scholarships and a 6–8 self-study program." />
+  <title>Wealth Options University | Membership, eCourses, Coaching</title>
+  <meta name="description" content="Wealth Options University by Mrs. Tiphany Richardson—monthly membership, eCourses, live coaching, and downloadable lessons." />
+  <link rel="canonical" href="https://www.wealthoptionsuniversity.com/" />
+  <script defer src="https://js.stripe.com/v3/"></script>
   <style>
-    /* Color system inspired by crayons */
-    :root {
-      --bg: #ffffff;
-      --fg: #1f2a44;
-      --muted: #5e6a85;
-      --card: #fffdfa;
-      --border: #e5e7eb;
-      --primary: #2563eb;  /* blue */
-      --crayon-red: #ff6b6b;
-      --crayon-yellow: #ffd166;
-      --crayon-green: #06d6a0;
-      --crayon-blue: #118ab2;
-      --crayon-purple: #8338ec;
-      --shadow: rgba(31, 42, 68, 0.14);
+    :root{
+      --bg:#f9fafc;
+      --card:#ffffff;
+      --text:#1a1a1a;
+      --muted:#555;
+      --primary:#28c76f;
+      --accent:#ffd166;
+      --shadow:0 8px 28px rgba(0,0,0,0.10);
+      --maxw:1200px;
     }
-    .theme-minimal {
-      --bg: #ffffff;
-      --fg: #0f172a;
-      --muted: #64748b;
-      --card: #f8fafc;
-      --border: #e5e7eb;
-      --primary: #111827;
-      --crayon-red: #111827;
-      --crayon-yellow: #111827;
-      --crayon-green: #111827;
-      --crayon-blue: #111827;
-      --crayon-purple: #111827;
-      --shadow: rgba(0,0,0,0.08);
-    }
-
-    /* Base */
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color: var(--fg);
-      background:
-        radial-gradient(700px 400px at 10% -10%, rgba(131,56,236,0.10), transparent 55%),
-        radial-gradient(700px 400px at 90% -15%, rgba(17,138,178,0.10), transparent 55%),
-        var(--bg);
-      line-height: 1.6;
-    }
-    a { color: var(--primary); text-decoration: none; }
-    img { max-width: 100%; height: auto; }
-    .container { width: min(1100px, 92vw); margin: 0 auto; }
-
-    /* Crayon header stripe */
-    .crayon-stripe {
-      height: 6px;
-      background:
-        linear-gradient(90deg,
-          var(--crayon-red) 0 20%,
-          var(--crayon-yellow) 20% 40%,
-          var(--crayon-green) 40% 60%,
-          var(--crayon-blue) 60% 80%,
-          var(--crayon-purple) 80% 100%);
-    }
-
-    /* Navigation */
-    .nav {
-      position: sticky; top: 0; z-index: 1000;
-      backdrop-filter: saturate(180%) blur(10px);
-      background: color-mix(in oklab, var(--bg) 85%, transparent);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0.6rem 0;
-    }
-    .brand { display: flex; align-items: center; gap: 0.8rem; font-weight: 800; }
-    .brand img { width: 40px; height: 40px; border-radius: 8px; box-shadow: 0 8px 20px var(--shadow); }
-    .links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-    .links a {
-      padding: 0.45rem 0.7rem; border-radius: 8px; font-weight: 700; color: var(--fg);
-      transition: transform 160ms ease, background 160ms ease;
-    }
-    .links a:hover { background: var(--card); transform: translateY(-1px); }
-
-    /* Pencil toggle (theme + popup trigger) */
-    .toggle {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.4rem 0.6rem; border-radius: 10px; background: var(--card); cursor: pointer;
-      box-shadow: 0 6px 18px var(--shadow);
-      user-select: none;
-    }
-    .toggle svg { width: 22px; height: 22px; }
-    .toggle .label { font-weight: 800; font-size: 0.9rem; color: var(--muted); }
-
-    /* Hero */
-    .hero { padding: 2.8rem 0 2rem; }
-    .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 2rem; align-items: center; }
-    .eyebrow { font-weight: 800; color: var(--crayon-purple); letter-spacing: 0.4px; }
-    .hero h1 { font-size: clamp(2rem, 3.6vw, 3rem); margin: 0.5rem 0; }
-    .hero p { color: var(--muted); max-width: 60ch; }
-    .cta-row { display: flex; gap: 0.8rem; margin-top: 1rem; flex-wrap: wrap; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.7rem 1rem; border-radius: 12px; font-weight: 800;
-      border: 1px solid var(--border); background: var(--bg); color: var(--fg);
-      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
-    }
-    .btn-primary { background: var(--crayon-blue); color: white; border-color: color-mix(in oklab, var(--crayon-blue) 50%, var(--border)); }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px var(--shadow); }
-
-    /* Icon strip */
-    .icons {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; margin-top: 1.2rem;
-    }
-    .icon-card {
-      background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 0.9rem;
-      display: flex; align-items: center; gap: 0.8rem; box-shadow: 0 10px 22px var(--shadow);
-      transition: transform 200ms ease;
-    }
-    .icon-card:hover { transform: translateY(-3px) rotate(-0.2deg); }
-    .icon-card svg { width: 26px; height: 26px; }
-    .icon-card .label { font-weight: 800; color: var(--muted); }
-
-    /* Deep-linkable single-page sections via :target */
-    section.page { display: none; }
-    section.page:target { display: block; }
-    #home:target ~ #home, body:not(:has(section.page:target)) #home { display: block; }
-    @supports not (selector(:has(*))) {
-      section.page { display: none; }
-      #home { display: block; }
-    }
-
-    /* Shared section styles */
-    .section { padding: 2.5rem 0; }
-    .section h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); margin-bottom: 0.7rem; }
-    .lead { color: var(--muted); max-width: 65ch; }
-    .cards { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
-    .card {
-      background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem;
-      box-shadow: 0 10px 22px var(--shadow);
-    }
-
-    /* Forms */
-    .form-grid { display: grid; gap: 0.8rem; grid-template-columns: repeat(2, 1fr); }
-    .form-grid .full { grid-column: 1 / -1; }
-    label { font-weight: 800; font-size: 0.85rem; color: var(--muted); }
-    input, select, textarea {
-      width: 100%; padding: 0.7rem 0.8rem; border-radius: 10px; border: 1px solid var(--border);
-      background: #fff; color: var(--fg);
-      transition: box-shadow 160ms ease, border-color 160ms ease;
-    }
-    input:focus, select:focus, textarea:focus {
-      outline: none; border-color: var(--crayon-purple);
-      box-shadow: 0 0 0 4px color-mix(in oklab, var(--crayon-purple) 22%, transparent);
-    }
-
-    /* Scholarships CTA */
-    .scholar-cta {
-      display: grid; gap: 1rem; grid-template-columns: 1fr 1fr; align-items: center;
-      background: linear-gradient(120deg,
-        color-mix(in oklab, var(--crayon-yellow) 30%, #fff),
-        color-mix(in oklab, var(--crayon-green) 30%, #fff));
-      border: 1px solid var(--border); border-radius: 16px; padding: 1rem;
-    }
-
-    /* Middle School badge */
-    .badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-weight: 800; color: var(--crayon-purple);
-      background: color-mix(in oklab, var(--crayon-purple) 12%, #fff);
-      border: 1px solid color-mix(in oklab, var(--crayon-purple) 20%, var(--border));
-      border-radius: 999px; padding: 0.35rem 0.7rem;
-    }
-
-    /* Footer */
-    footer { padding: 2rem 0; color: var(--muted); }
-
-    /* Animations */
-    .reveal { opacity: 0; transform: translateY(14px); transition: opacity 620ms ease, transform 620ms ease; }
-    .reveal.show { opacity: 1; transform: translateY(0); }
-
-    /* Welcome modal base (hidden until JS shows) */
-    .modal-backdrop {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.45);
-      display: none; align-items: center; justify-content: center; z-index: 9999;
-    }
-    .modal {
-      background: #fff; padding: 1.6rem; border-radius: 16px; max-width: 420px; text-align: center;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.22);
-      animation: popIn 280ms ease;
-    }
-    @keyframes popIn { from { transform: scale(0.96); opacity: 0 } to { transform: scale(1); opacity: 1 } }
-
-    /* Scribble animation */
-    @keyframes drawScribble { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
-    #scribblePath { stroke-dasharray: 1000; stroke-dashoffset: 1000; }
-    #scribble.animate { display: block; }
-
-    /* Responsive */
-    @media (max-width: 960px) {
-      .hero-grid { grid-template-columns: 1fr; }
-      .icons { grid-template-columns: repeat(2, 1fr); }
-      .cards { grid-template-columns: 1fr; }
-      .form-grid { grid-template-columns: 1fr; }
-      .scholar-cta { grid-template-columns: 1fr; }
-    }
+    body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 18px}
+    header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:#fff;box-shadow:var(--shadow);position:sticky;top:0;z-index:100}
+    header img.logo{height:50px}
+    nav a{margin:0 8px;text-decoration:none;color:var(--text)}
+    .btn-primary{background:var(--primary);color:#fff;padding:10px 16px;border-radius:8px;border:none;cursor:pointer}
+    .btn-ghost{border:1px solid #ccc;padding:10px 16px;border-radius:8px;background:#fff;color:var(--text);cursor:pointer}
+    .hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:20px;padding:60px 18px;background:linear-gradient(135deg,#fffbe6,#f0fff7)}
+    .hero img{max-width:100%;border-radius:12px;box-shadow:var(--shadow)}
+    .features{padding:40px 18px;background:#fff}
+    .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+    .card{background:var(--card);padding:20px;border-radius:12px;box-shadow:var(--shadow);text-align:center}
+    .card img{height:80px;margin-bottom:12px}
+    footer{padding:20px;background:#fff;text-align:center;color:var(--muted);margin-top:40px}
+    @media(max-width:768px){.hero{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="crayon-stripe" aria-hidden="true"></div>
-  <nav class="nav">
-    <div class="container nav-inner">
-      <div class="brand">
-        <img src="https://i.postimg.cc/KjWTVC90/creativechristian-center-logo.jpg" alt="Creative Christian Learning Center logo" />
-        <span>Creative Christian Learning Center</span>
-      </div>
-      <div class="links" role="navigation" aria-label="Primary">
-        <a href="#home">Home</a>
-        <a href="#enroll">Enroll</a>
-        <a href="#scholarships">Scholarships</a>
-        <a href="#middle">Middle School</a>
-        <a href="#about">About</a>
-        <a href="#privacy">Privacy</a>
-      </div>
-      <!-- Pencil theme toggle + popup trigger -->
-      <div class="toggle" id="pencilToggle" role="button" tabindex="0" aria-pressed="true" aria-label="Toggle playful colors">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path d="M3 21l3-3h3l9-9a3 3 0 1 0-4.243-4.243l-9 9v3z" stroke-width="2"/>
-          <circle cx="19.5" cy="4.5" r="1.5" fill="currentColor"/>
-        </svg>
-        <span class="label">Color pops</span>
-      </div>
-    </div>
-  </nav>
+  <header>
+   <img src="https://i.postimg.cc/XJnwpMtN/Wealth-Options-University.png" alt="Logo" style="width: 15%; height: auto;">
+
+    <nav>
+      <a href="#courses">eCourses</a>
+      <a href="#membership">Membership</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#live">Go Live</a>
+      <a href="#booking">1-on-1</a>
+      <a href="#admin">Admin</a>
+      <a href="quotex-demo.html">Try Demo Trading</a>
+
+    </nav>
+  </header>
 
   <!-- Home -->
-  <section id="home" class="page">
-    <header class="hero container reveal">
-      <div class="hero-grid">
-        <div>
-          <div class="eyebrow">Faith • Curiosity • Excellence</div>
-          <h1>Playful learning with a professional touch</h1>
-          <p>Warm, inviting classrooms with joyful academics and character-building experiences. Explore K–5 enrollment, scholarships, and a self-paced Middle School program in leadership and investing.</p>
-          <div class="cta-row">
-            <a class="btn btn-primary" href="#enroll">Start Enrollment</a>
-            <a class="btn" href="#scholarships">Find Scholarships</a>
-            <a class="btn" href="#middle">Middle School Program</a>
-          </div>
-
-          <div class="icons">
-            <!-- Ruler -->
-            <div class="icon-card reveal">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <rect x="3" y="6" width="18" height="4" rx="2" />
-                <path d="M6 10v4m3-4v2m3-2v4m3-4v2m3-2v4" />
-              </svg>
-              <div class="label">Measure & grow</div>
-            </div>
-            <!-- Apple -->
-            <div class="icon-card reveal">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M16.5 8.5c-2 0-3.5-1.5-3.5-3.5 0-1.5.7-2.7 1.7-3.4M7.5 8.5c2 0 3.5-1.5 3.5-3.5 0-1.5-.7-2.7-1.7-3.4" />
-                <path d="M12 7c-5.5 0-7 4.5-7 7 0 3.5 2.5 6 7 6s7-2.5 7-6c0-2.5-1.5-7-7-7z" />
-              </svg>
-              <div class="label">Healthy habits</div>
-            </div>
-            <!-- Books -->
-            <div class="icon-card reveal">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M4 5h10a3 3 0 0 1 3 3v11H7a3 3 0 0 1-3-3V5z" />
-                <path d="M7 5v11M17 8h3v11" />
-              </svg>
-              <div class="label">Strong academics</div>
-            </div>
-            <!-- Pencil -->
-            <div class="icon-card reveal">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M3 21l3-3h3l9-9a3 3 0 1 0-4.243-4.243l-9 9v3z" />
-              </svg>
-              <div class="label">Creative spirit</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Hero image with playful frame -->
-        <div class="card reveal" style="min-height: 240px;">
-          <img src="https://i.postimg.cc/KjWTVC90/creativechristian-center-logo.jpg" alt="Creative Christian Learning Center hero logo" style="border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 10px 24px var(--shadow);" />
-        </div>
-      </div>
-    </header>
+  <section class="hero container" id="home">
+    <div>
+      <h1>Build Wealth with Guidance You Can Trust</h1>
+      <p>Curated eCourses and private coaching by <strong>Mrs. Tiphany Richardson</strong>. Join the community or purchase courses à la carte.</p>
+      <button class="btn-primary">Join Membership</button>
+    </div>
+    <div>
+      <!-- Hero image: finance graph -->
+      <img src="https://img.freepik.com/free-vector/financial-growth-graph_53876-90406.jpg" alt="Financial Growth Graph">
+    </div>
   </section>
 
-  <!-- Enroll (K–5) -->
-  <section id="enroll" class="page">
-    <div class="container section reveal">
-      <h2>K–5 Enrollment</h2>
-      <p class="lead">Enroll your child in Creative Christian Learning Center. Foundational skills, joyful learning, and a nurturing environment.</p>
-
-      <div class="cards">
-        <div class="card">
-          <h3>Parent enrollment form</h3>
-          <form id="form-enroll" aria-label="K–5 Parent Enrollment">
-            <div class="form-grid">
-              <div>
-                <label for="enrollName">Parent full name</label>
-                <input id="enrollName" name="parent_name" type="text" placeholder="Full Name" required />
-              </div>
-              <div>
-                <label for="msName">Child name</label>
-                <input id="msName" name="child_name" type="text" placeholder="Child full name" required />
-              </div>
-              <div>
-                <label for="enrollEmail">Email</label>
-                <input id="enrollEmail" name="email" type="email" placeholder="name@example.com" required />
-              </div>
-              <div>
-                <label for="enrollPhone">Phone</label>
-                <input id="enrollPhone" name="phone" type="tel" placeholder="(555) 555-5555" required />
-              </div>
-              <div>
-                <label for="childAge">Child age</label>
-                <input id="childAge" name="child_age" type="number" min="4" max="12" placeholder="6" required />
-              </div>
-              <div>
-                <label for="childGrade">Child grade</label>
-                <select id="childGrade" name="child_grade" required>
-                  <option value="">Select grade</option>
-                  <option>K</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-                </select>
-              </div>
-              <div class="full">
-                <label for="notes">Notes (optional)</label>
-                <textarea id="notes" name="notes" rows="3" placeholder="Share any learning preferences or needs..."></textarea>
-              </div>
-            </div>
-            <div style="margin-top: 0.8rem;">
-              <button class="btn btn-primary" type="submit">Submit enrollment</button>
-            </div>
-          </form>
-        </div>
-
-        <div class="card">
-          <h3>Waitlist</h3>
-          <form id="form-waitlist" aria-label="K–5 Waitlist">
-            <div class="form-grid">
-              <div>
-                <label for="wlFirst">Parents Name</label>
-                <input id="wlFirst" name="firstlast_name" type="text" placeholder="First and last name" required />
-              </div>
-              <div>
-                <label for="msName">Child Name</label>
-                <input id="msName" name="student_name" type="text" placeholder="Student full name" required />
-              </div>
-              <div>
-                <label for="wlLast">Grade Level</label>
-                <input id="wlLast" name="Grade_level" type="text" placeholder="Grade level" required />
-              </div>
-              <div>
-                <label for="wlPhone">Phone</label>
-                <input id="wlPhone" name="phone" type="tel" placeholder="(555) 555-5555" required />
-              </div>
-              <div>
-                <label for="wlEmail">Email</label>
-                <input id="wlEmail" name="email" type="email" placeholder="name@example.com" required />
-              </div>
-              <div>
-                <label for="wlAge">Child age</label>
-                <input id="wlAge" name="child_age" type="number" min="4" max="12" placeholder="7" required />
-              </div>
-              <div>
-                <label for="wlStart">Anticipated start date</label>
-                <input id="wlStart" name="start_date" type="date" required />
-              </div>
-            </div>
-            <div style="margin-top: 0.8rem;">
-              <button class="btn btn-primary" type="submit">Join waitlist</button>
-            </div>
-          </form>
-        </div>
-
-        <div class="card">
-          <h3>Why families choose us</h3>
-          <ul>
-            <li><strong>Faith-centered:</strong> Character and community, cultivated daily.</li>
-            <li><strong>Foundational skills:</strong> Reading, math, and curiosity-first learning.</li>
-            <li><strong>Warm environment:</strong> Professional, playful, and welcoming to all.</li>
-          </ul>
-        </div>
+  <!-- Features -->
+  <section class="features container" id="features">
+    <h2 style="text-align:center">Why Wealth Options University</h2>
+    <div class="grid-3">
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/2331/2331943.png" alt="Curriculum Icon">
+        <h3>Premium Curriculum</h3>
+        <p>Step-by-step lessons, screen recordings, and templates you can download.</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Live Support Icon">
+        <h3>Live Support</h3>
+        <p>Go live with the community and book 1-on-1 sessions after your purchase.</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/2331/2331970.png" alt="Flexible Access Icon">
+        <h3>Flexible Access</h3>
+        <p>Monthly membership or single course—choose the path that fits your goals.</p>
       </div>
     </div>
   </section>
 
-  <!-- Scholarships -->
-  <section id="scholarships" class="page">
-    <div class="container section reveal">
-      <h2>Scholarships for K–5</h2>
-      <p class="lead">Many families qualify for tuition support. Explore Step Up For Students options, including UA and PEP Scholarship programs.</p>
-
-      <div class="scholar-cta">
-        <div>
-          <h3>Step Up For Students</h3>
-          <p>Learn about Florida scholarship pathways and how to apply. K–5 families can find programs designed to support early learning and literacy.</p>
-          <div class="cta-row">
-            <a class="btn btn-primary" href="https://www.stepupforstudents.org/scholarships/" target="_blank" rel="noopener">Go to Step Up For Students</a>
-            <a class="btn" href="#enroll">Continue enrollment</a>
-          </div>
-        </div>
-        <div class="card">
-          <h4 style="margin-top:0;">Quick tips</h4>
-          <ul>
-            <li><strong>UA Scholarship:</strong> Supports students with unique abilities.</li>
-            <li><strong>PEP Scholarship:</strong> Personalized education program through an ESA.</li>
-            <li><strong>Docs ready:</strong> Have ID, residency, and prior school info handy.</li>
-          </ul>
-          <p style="color: var(--muted); font-size: 0.9rem;">Program availability and details can change; review the official Step Up page before applying.</p>
-        </div>
+  <!-- Courses -->
+  <section class="features container" id="courses">
+    <h2 style="text-align:center">Popular eCourses</h2>
+    <div class="grid-3">
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135673.png" alt="Foundations Icon">
+        <h3>Wealth Foundations</h3>
+        <p>Mindset, budgeting, and compounding strategies.</p>
+        <button class="btn-primary">Buy Course</button>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/2331/2331958.png" alt="Digital Income Icon">
+        <h3>Digital Income Playbook</h3>
+        <p>Launch your first digital product with templates.</p>
+        <button class="btn-primary">Buy Course</button>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/2331/2331930.png" alt="Investing Icon">
+        <h3>Investing 101</h3>
+        <p>Intro to stocks, ETFs, and risk management.</p>
+        <button class="btn-primary">Buy Course</button>
       </div>
     </div>
   </section>
 
-  <!-- Middle School -->
-  <section id="middle" class="page">
-    <div class="container section reveal">
-      <div class="badge">Grades 6–8 • Open Enrollment</div>
-      <h2>Self-study: Leadership development and investing strategies</h2>
-      <p class="lead">A self-paced program focused on leadership mindsets, decision-making, financial literacy, and beginner-friendly investing concepts—guided with projects and reflection.</p>
-
-      <div class="cards">
-        <div class="card">
-          <h3>Enroll in the 6–8 program</h3>
-          <form id="form-middle" aria-label="Middle School Enrollment">
-            <div class="form-grid">
-              <div>
-                <label for="msName">Student name</label>
-                <input id="msName" name="student_name" type="text" placeholder="Student full name" required />
-              </div>
-              <div>
-                <label for="msEmail">Parent email</label>
-                <input id="msEmail" name="email" type="email" placeholder="parent@example.com" required />
-              </div>
-              <div>
-                <label for="msPhone">Parent phone</label>
-                <input id="msPhone" name="phone" type="tel" placeholder="(555) 555-5555" required />
-              </div>
-              <div>
-                <label for="msGrade">Grade</label>
-                <select id="msGrade" name="grade" required>
-                  <option value="">Select grade</option>
-                  <option>6</option><option>7</option><option>8</option>
-                </select>
-              </div>
-              <div class="full">
-                <label for="msInterest">Goals (optional)</label>
-                <textarea id="msInterest" name="goals" rows="3" placeholder="Tell us what you hope to learn and build..."></textarea>
-              </div>
-            </div>
-            <div style="margin-top: 0.8rem;">
-              <button class="btn btn-primary" type="submit">Enroll in self-study</button>
-            </div>
-          </form>
-        </div>
-
-        <div class="card">
-          <h3>What students explore</h3>
-          <ul>
-            <li><strong>Leadership:</strong> Values, vision, and practical teamwork.</li>
-            <li><strong>Investing basics:</strong> Risk, compounding, and simple portfolios.</li>
-            <li><strong>Projects:</strong> Challenges, reflections, and community impact ideas.</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3>How it works</h3>
-          <ul>
-            <li><strong>Self-paced:</strong> Flexible weekly time.</li>
-            <li><strong>Guides:</strong> Clear prompts and checklists.</li>
-            <li><strong>Support:</strong> Parent and mentor touchpoints.</li>
-          </ul>
-        </div>
-      </div>
+  <!-- Membership -->
+  <section class="features container" id="membership">
+    <h2 style="text-align:center">Membership</h2>
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135714.png" alt="Membership Icon">
+      <h3>$49 / month</h3>
+      <p>Exclusive live sessions, member-only downloads, and priority booking.</p>
+      <button class="btn-primary">Subscribe</button>
     </div>
   </section>
 
-  <!-- About -->
-  <section id="about" class="page">
-    <div class="container section reveal">
-      <h2>About Mrs. Tiphany Richardson</h2>
-      <p class="lead">Mrs. Richardson leads Creative Christian Learning Center with a heart for faith-driven education, joyful rigor, and nurturing every child’s potential.</p>
-
-      <div class="cards">
-        <div class="card">
-          <h3>Our mission</h3>
-          <p>To partner with families in building character, curiosity, and academic confidence—preparing children to serve, lead, and thrive.</p>
-        </div>
-        <div class="card">
-          <h3>Our approach</h3>
-          <p>Professional standards with playful energy: structured foundations in reading and math, hands-on projects, and warm community.</p>
-        </div>
-        <div class="card">
-          <h3>Contact</h3>
-          <p>Email us anytime with questions about enrollment, scholarships, or programs. We’re honored to serve your family.</p>
-        </div>
-      </div>
+  <!-- Dashboard -->
+  <section class="features container" id="dashboard">
+    <h2 style="text-align:center">Dashboard</h2>
+    <p>Sign in to access your purchased courses, downloads, and book 1-on-1 sessions.</p>
+    <div class="card">
+      <h3>Member Sign In</h3>
+      <input type="email" placeholder="Email"><br><br>
+      <input type="password" placeholder="Password"><br><br>
+      <button class="btn-primary">Sign In</button>
     </div>
   </section>
 
-  <!-- Privacy (FERPA-aware) -->
-  <section id="privacy" class="page">
-    <div class="container section reveal">
-      <h2>Privacy policy</h2>
-      <p class="lead">We respect your family’s privacy. We handle education records consistent with FERPA and limit access to those with a legitimate educational interest.</p>
+  <!-- Booking -->
+  <section class="features container" id="booking">
+    <h2 style="text-align:center">Book a 1-on-1 Session</h2>
+    <form class="card">
+      <input type="text" placeholder="Name" required><br><br>
+      <input type="email" placeholder="Email" required><br><br>
+      <input type="date" required><br><br>
+      <input type="time" required><br><br>
+      <textarea placeholder="Notes"></textarea><br><br>
+      <button class="btn-primary">Request Booking</button>
+    </form>
+  </section>
 
-      <div class="cards">
-        <div class="card">
-          <h3>Our commitments</h3>
-          <ul>
-            <li><strong>Access rights:</strong> Parents can access and request correction of their child’s education records.</li>
-            <li><strong>Consent:</strong> We obtain written consent before sharing personally identifiable information, except where FERPA allows.</li>
-            <li><strong>Security:</strong> Encryption in transit, strict role-based access, audit logging, and least-privilege permissions.</li>
-            <li><strong>Training:</strong> Staff receive privacy training and follow secure handling practices.</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Contact for privacy requests</h3>
-          <p>To request access or an amendment, or to ask a privacy question, contact the school office. We respond promptly and within required timeframes.</p>
-        </div>
-        <div class="card">
-          <h3>Notice</h3>
-          <p>We provide annual notices of rights and updates to our privacy policy. Families are encouraged to review scholarship sites’ privacy policies separately.</p>
-        </div>
-      </div>
+  <!-- Live -->
+  <section class="features container" id="live">
+    <h2 style="text-align:center">Go Live</h2>
+    <div class="card">
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/live_stream?channel=YOUR_CHANNEL_ID" frameborder="0" allowfullscreen></iframe>
+      <p>Join our live sessions and chat with the community.</p>
     </div>
   </section>
 
-  <footer class="container">
-    <div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
-      <p>© <span id="year"></span> Creative Christian Learning Center. All rights reserved. • <a href="#privacy">Privacy policy</a></p>
-      <div style="display:flex; gap:0.6rem;">
-        <a class="btn" href="#home">Home</a>
-        <a class="btn" href="#enroll">Enroll</a>
-        <a class="btn" href="#scholarships">Scholarships</a>
-        <a class="btn" href="#middle">Middle School</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Welcome modal -->
-  <div id="welcomeModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" aria-hidden="true">
-    <div class="modal">
-      <h2 id="welcomeTitle" style="margin-top:0;">Welcome to Creative Christian Learning Center!</h2>
-      <p style="margin: 0.5rem 0 1.2rem;">We’re excited to have you here. Ready to enroll your child?</p>
-      <a href="#enroll" class="btn btn-primary" style="text-decoration:none;">Go to Enrollment</a>
-      <div style="margin-top:1rem;">
-        <button id="closeWelcome" class="btn">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Scribble SVG -->
-  <svg id="scribble" viewBox="0 0 300 100" width="300" height="100"
-       style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-              pointer-events: none; z-index: 9998; display: none;">
-    <path id="scribblePath"
-          d="M10,50 Q60,10 110,50 T210,50 T310,50"
-          stroke="currentColor" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"
-          style="color: var(--crayon-red);" />
-  </svg>
-
-  <script>
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Elements
-    const bodyEl = document.body;
-    const toggle = document.getElementById('pencilToggle');
-    const welcomeModal = document.getElementById('welcomeModal');
-    const closeWelcome = document.getElementById('closeWelcome');
-
-    // Theme switcher + popup on toggle
-    function setTheme(playful) {
-      bodyEl.classList.toggle('theme-minimal', !playful);
-      toggle.setAttribute('aria-pressed', playful ? 'true' : 'false');
-      toggle.querySelector('.label').textContent = playful ? 'Color pops' : 'Minimal';
-    }
-    let playful = true;
-    setTheme(playful);
-
-    function toggleTheme() {
-      playful = !playful;
-      setTheme(playful);
-      showWelcomePopup();
-      playScribble();
-    }
-
-    toggle.addEventListener('click', toggleTheme);
-    toggle.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggleTheme();
-      }
-    });
-
-    // Popup logic
-    function showWelcomePopup() {
-      welcomeModal.style.display = 'flex';
-      welcomeModal.setAttribute('aria-hidden', 'false');
-    }
-    function closePopup() {
-      welcomeModal.style.display = 'none';
-      welcomeModal.setAttribute('aria-hidden', 'true');
-    }
-    closeWelcome.addEventListener('click', closePopup);
-    welcomeModal.addEventListener('click', (e) => {
-      if (e.target === welcomeModal) closePopup(); // click backdrop to close
-    });
-
-    // Scribble animation
-    function playScribble() {
-      const scribble = document.getElementById('scribble');
-      const path = document.getElementById('scribblePath');
-      scribble.classList.add('animate');
-      scribble.style.display = 'block';
-      path.style.animation = 'drawScribble 1.1s ease forwards';
-
-      setTimeout(() => {
-        scribble.classList.remove('animate');
-        scribble.style.display = 'none';
-        path.style.animation = '';
-      }, 1400);
-    }
-
-    // Scroll reveal animations
-    const reveals = document.querySelectorAll('.reveal');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('show');
-      });
-    }, { threshold: 0.15 });
-    reveals.forEach(el => io.observe(el));
-
-    // Basic form handlers (prevent page reload; demo only)
-    function attachForm(id, msg) {
-      const form = document.getElementById(id);
-      if (!form) return;
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert(msg + '\nWe will contact you shortly.'); // replace with real submission
-        form.reset();
-      });
-    }
-    attachForm('form-enroll', 'Enrollment submitted!');
-    attachForm('form-waitlist', 'Waitlist joined!');
-    attachForm('form-middle', 'Middle School enrollment submitted!');
-  </script>
-</body>
-</html>
+ 
